@@ -69,8 +69,8 @@
 
                     <tr th:each="destino:${destinos}">
                         <td th:text = "${destino.id}" />
-                        <td th:text = "${destino.dataInicial}" />
-                        <td th:text = "${destino.dataFinal}" />
+                        <td th:text = "${destino.inicio}" />
+                        <td th:text = "${destino.fim}" />
                         <td><a th:href="@{manterDestino(acao='preparaOperacao', operacao='Editar', cod=${destino.id})}" class="btn btn-primary btn-sm">Editar</a></td>
                         <td><a th:href="@{manterDestino(acao='preparaOperacao', operacao='Excluir', cod=${destino.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
                     </tr>

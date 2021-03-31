@@ -39,8 +39,6 @@ public class Funcionario {
     @NotNull
     private String senha;
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private TipoFuncionario tipo;
+
 
 }

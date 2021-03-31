@@ -69,9 +69,9 @@
 
         <tbody>
 
-                <tr> 
+                <tr th:each="empresa:${empresas}">
                     <td th:text="${empresa.nome}"/>
-                    <td th:text="${empresa.tipo}"/>
+                    <td>MUDAR</td>
                     <td><a th:href="@{manterEmpresa(acao='preparaOperacao', operacao='Editar', cod=${empresa.id})}" class="btn btn-primary btn-sm">Editar</a></td>
                     <td><a th:href="@{manterEmpresa(acao='preparaOperacao', operacao='Excluir', cod=${empresa.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
                 </tr>

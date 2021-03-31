@@ -34,7 +34,5 @@ public class Empresa {
     private String cep;
     @NotNull
     private String localidade;
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private TipoEmpresa tipo;
+
 }
