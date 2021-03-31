@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="pt-br">
+
+    <head>
+
+        <title>Destino</title>
+
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    </head>
+    <body style="text-align: center;background-color: #dadaf6" >
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="homeFuncionario.jsp">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="pesquisaPacote">Pacotes</a>
+                <a class="nav-link" href="pesquisaPassagem">Passagens</a>
+                <a class="nav-link" href="pesquisaCliente">Clientes</a>
+                <a class="nav-link" href="pesquisaFuncionario">Funcionários</a>
+                <a class="nav-link" href="pesquisaEmpresa">Empresas</a>
+                <a class="nav-link" href="pesquisaDestino">Destinos</a>
+
+            </div>
+        </div>
+    </div>
+    </nav>
+
+
+    <div class="container">
+        <div class="row align-items-start">
+            <div class="col">
+
+            </div>
+            <div class="col">
+            </div>
+        </div>
+    </div>
+
+
+        <h2><span th:text="${operacao}"></span> Destino</h2>
+        
+        <div class="col">
+            <form  action="ManterDestinoController?acao=confirmaOperacao&operacao=${operacao}" method="post">
+               <div class="row g-3 justify-content-md-center">
+                <div class="col-md-1">
+                    <label for="cod" class="form-label">Código</label>
+                    <input th:if="${destino != null}" type="text" class="form-control" id="cod" name="cod" placeholder=""  th:attr="value = ${destino.id}" readonly>
+                    <input th:unless="${destino != null}" type="text" class="form-control" id="cod" name="cod" placeholder="" readonly>
+                </div>
+                   
+                   <div class="col-md-2">
+                    
+                    <label for="idPacote" class="form-label">Pacote</label>
+                    <select th:each = "pacote: ${pacotes}" class="form-select" name="idPacote" id="idPacote">
+                            <option th:if = "${pacote.id == destino.pacote.id}"selected th:attr="value = ${destino.id}"></option>
+                            <option th:unless= "${pacote.id == destino.pacote.id}"    th:attr="value = ${destino.id}"></option>
+                     </select>
+                </div>
+                        
+                <div class="col-md-3">
+                    <label for="initial" class="form-label">Data Inicial</label>
+                    <input th:if="${destino != null}" type="date" class="form-control" id="initial" name="dataInicial" placeholder=""  th:attr="value = ${destino.dataInicial}">
+                    <input th:unless="${destino != null}" type="date" class="form-control" id="initial" name="dataInicial" placeholder="" >
+                </div>
+               </div>
+                <div class="row g-3 justify-content-md-center">
+                <div class="col-md-3">
+                    <label for="final" class="form-label">Data Final</label>
+                    <input th:if="${destino != null}" type="date" class="form-control" id="final" name="dataFinal" placeholder=""  th:attr="value = ${destino.dataFinal}">
+                    <input th:unless="${destino != null}" type="date" class="form-control" id="final" name="dataFinal" placeholder="" >
+                </div>
+
+                    <div class="col-md-3">
+                        <label for="inputCompany" class="form-label">Empresa</label>
+                        <select th:each = "empresa:${empresas}" id="inputCompany" class="form-select" name="cnpjEmpresa">
+                            <option th:if = "${empresa.id == destino.pacote.id}"selected th:attr="value = ${empresa.id}"></option>
+                            <option th:if = "${empresa.id == destino.pacote.id}" th:attr="value = ${empresa.id}"></option>
+                        </select>
+                    </div>
+
+                </div><br>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary" id="botaoSubmit">Confirmar</button>
+                </div>
+        </form>
+    </div>
+    <script type="text/javascript" th:src="@{/scripts/ViaCep.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/main.js}"></script>
+            
+</body>
+</html>

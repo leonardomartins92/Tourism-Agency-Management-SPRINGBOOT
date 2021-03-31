@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="pt-br">
+
+    <head>
+
+        <title>Pacote</title>
+
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+
+
+
+    </head>
+    <body style="text-align: center;background-color: #dadaf6" >
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="homeFuncionario.jsp">Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active" aria-current="page" href="pesquisaPacote">Pacotes</a>
+                    <a class="nav-link" href="pesquisaPassagem">Passagens</a>
+                    <a class="nav-link" href="pesquisaCliente">Clientes</a>
+                    <a class="nav-link" href="pesquisaFuncionario">Funcionários</a>
+                    <a class="nav-link" href="pesquisaEmpresa">Empresas</a>
+                    <a class="nav-link" href="pesquisaDestino">Destinos</a>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <div class="row align-items-start">
+            <div class="col">
+
+            </div>
+            <div class="col">
+            </div>
+        </div>
+    </div>
+
+
+        <h2><span th:text="${operacao}"></span> Pacote</h2>
+
+    <form action="ManterPacoteController?acao=confirmaOperacao&operacao=${operacao}&cod=${idPacote}" method="post">
+        <div class="row g-3 justify-content-md-center">
+        
+        <div class="col-md-1">
+                    <label for="cod" class="form-label">Código</label>
+            <input th:if="${pacote != null}" type="text" class="form-control" id="cod" name="id" placeholder=""  th:attr="value = ${cliente.id}" readonly>
+            <input th:unless="${pacote != null}" type="text" class="form-control" id="cod" name="id" placeholder="" readonly>
+        </div>
+             
+        <div class="col-md-4">
+            <label for="inputCliente" class="form-label">Cliente</label>
+            <select th:each="cliente:${clientes}" id="inputCliente" class="form-select" name="idCliente">
+                    <option th:if="${pacote.cliente.id == cliente.id}" th:attr="value=${cliente.id}" selected> </option>
+                    <option th:unless="${pacote.cliente.id == cliente.id}" th:attr="value=${cliente.id}"> </option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label for="idFuncionario" class="form-label">Funcionários</label>
+            <select th:each="funcionario:${funcionarios}" class="form-select" name="idFuncionario" id="idFuncionario">
+                <option th:if="${pacote.cliente.id == funcionario.id}" th:attr="value=${funcionario.id}" selected> </option>
+                <option th:unless="${pacote.cliente.id == funcionario.id}" th:attr="value=${funcionario.id}"> </option>
+            </select>
+        </div>
+        </div><br>        
+        <div class="col-4">
+            <button type="submit" class="btn btn-primary" id="botaoSubmit">Confirmar</button>
+        </div>      
+
+    </form>
+
+
+    <script type="text/javascript" th:src="@{/scripts/ViaCep.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/main.js}"></script>
+
+</body>
+</html>       
