@@ -34,5 +34,7 @@ public class Empresa {
     private String cep;
     @NotNull
     private String localidade;
+    @NotNull
+    private TipoEmpresa tipoEmpresa;
 
 }

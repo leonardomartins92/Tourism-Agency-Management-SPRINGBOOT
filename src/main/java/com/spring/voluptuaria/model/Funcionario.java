@@ -38,7 +38,8 @@ public class Funcionario {
     private String cep;
     @NotNull
     private String senha;
-
+    @NotNull
+    private TipoFuncionario tipoFuncionario;
 
 
 }
