@@ -53,30 +53,29 @@
     </div>
 
 
-        <h2><span th:text="${operacao}"></span> Pacote</h2>
+        <h2><span th:text="${operacao}"/> Pacote</h2>
 
     <form action="ManterPacoteController?acao=confirmaOperacao&operacao=${operacao}&cod=${idPacote}" method="post">
         <div class="row g-3 justify-content-md-center">
         
         <div class="col-md-1">
-                    <label for="cod" class="form-label">Código</label>
-            <input th:if="${pacote != null}" type="text" class="form-control" id="cod" name="id" placeholder=""  th:attr="value = ${cliente.id}" readonly>
-            <input th:unless="${pacote != null}" type="text" class="form-control" id="cod" name="id" placeholder="" readonly>
+            <label for="cod" class="form-label">Código</label>
+            <input  type="text" class="form-control" id="cod" name="id" placeholder=""  th:attr="value = ${pacote?.id}" readonly>
         </div>
              
         <div class="col-md-4">
             <label for="inputCliente" class="form-label">Cliente</label>
-            <select th:each="cliente:${clientes}" id="inputCliente" class="form-select" name="idCliente">
-                    <option th:if="${pacote.cliente.id == cliente.id}" th:attr="value=${cliente.id}" selected> </option>
-                    <option th:unless="${pacote.cliente.id == cliente.id}" th:attr="value=${cliente.id}"> </option>
+            <select  id="inputCliente" class="form-select" name="idCliente">
+                    <option th:each="cliente:${clientes}"  th:if="${pacote?.cliente?.id == cliente?.id}"  selected> <span th:text="${cliente?.id}"/> </option>
+                    <option th:each="cliente:${clientes}" th:unless="${pacote?.cliente?.id == cliente?.id}" > <span th:text="${cliente?.id}"/> </option>
             </select>
         </div>
 
         <div class="col-md-4">
             <label for="idFuncionario" class="form-label">Funcionários</label>
-            <select th:each="funcionario:${funcionarios}" class="form-select" name="idFuncionario" id="idFuncionario">
-                <option th:if="${pacote.cliente.id == funcionario.id}" th:attr="value=${funcionario.id}" selected> </option>
-                <option th:unless="${pacote.cliente.id == funcionario.id}" th:attr="value=${funcionario.id}"> </option>
+            <select class="form-select" name="idFuncionario" id="idFuncionario">
+                <option th:each="funcionario:${funcionarios}" th:if="${pacote?.cliente?.id == funcionario?.id}"  selected> <span th:text="${funcionario?.id}"/> </option>
+                <option th:each="funcionario:${funcionarios}" th:unless="${pacote?.cliente?.id == funcionario?.id}" > <span th:text="${funcionario?.id}"/> </option>
             </select>
         </div>
         </div><br>        

@@ -56,41 +56,35 @@
 
                 <div class="col-md-1">
                     <label for="cod" class="form-label">Código</label>
-                    <div class="col-1">
-                        <label for="cod" class="form-label">Código</label>
-                        <input th:if="${passagem != null}" type="text" class="form-control" id="cod" name="cod" placeholder=""  th:attr="value = ${passagem.id}" readonly>
-                        <input th:unless="${passagem != null}" type="text" class="form-control" id="cod" name="cod" placeholder="" readonly>
-                    </div>
+                    <input type="text" class="form-control" id="cod" name="cod" placeholder=""  th:attr="value = ${passagem?.id}" readonly>
                 </div>
                 
                 <div class="col-md-1">
                    
                     <label for="idPacote" class="form-label">Pacote</label>
-                    <select th:each="pacote:${pacotes}" class="form-select" name="idPacote" id="idPacote">
-                        <option th:if="${passagem.pacote.id == pacote.id}" th:attr="value=${pacote.id}" selected> </option>
-                        <option th:unless="${passagem.pacote.id == pacote.id}" th:attr="value=${pacote.id}"> </option>
+                    <select class="form-select" name="idPacote" id="idPacote">
+                        <option th:each="pacote:${pacotes}" th:if="${passagem?.pacote?.id == pacote?.id}" selected> <span th:text="${pacote?.id}"/> </option>
+                        <option th:each="pacote:${pacotes}" th:unless="${passagem?.pacote?.id == pacote?.id}" > <span th:text="${pacote?.id}"/> </option>
                     </select>
                </div>
                         
                 <div class="col-md-2">
                     <label for="idEmpresa" class="form-label">Empresa</label>
-                    <select th:each="empresa:${empresas}" class="form-select" name="idEmpresa" id="idEmpresa">
-                        <option th:if="${passagem.empresa.id == empresa.id}" th:attr="value=${empresa.id}" selected> </option>
-                        <option th:unless="${passagem.empresa.id == empresa.id}" th:attr="value=${empresa.id}"> </option>
+                    <select  class="form-select" name="idEmpresa" id="idEmpresa">
+                        <option th:each="empresa:${empresas}" th:if="${passagem?.empresa?.id == empresa?.id}" th:attr="value=${empresa?.id}" selected> <span th:text="${empresa?.nome}"/> </option>
+                        <option th:each="empresa:${empresas}" th:unless="${passagem?.empresa?.id == empresa?.id}" th:attr="value=${empresa?.id}">  <span th:text="${empresa?.nome}"/></option>
                     </select>
                 </div>
                         
                         
                 <div class="row g-3 justify-content-md-center">
                     <div class="col-md-2">
-                    <label for="origem" class="form-label">Origem</label>
-                        <input th:if="${passagem != null}" type="text" class="form-control" id="origem" name="origem" placeholder=""  th:attr="value = ${passagem.origem}">
-                        <input th:unless="${passagem != null}" type="text" class="form-control" id="origem" name="origem" placeholder="">
+                        <label for="origem" class="form-label">Origem</label>
+                        <input type="text" class="form-control" id="origem" name="origem" placeholder=""  th:attr="value = ${passagem?.origem}">
                     </div>
                 <div class="col-md-2">
                     <label for="destino" class="form-label">Destino</label>
-                    <input th:if="${passagem != null}" type="text" class="form-control" id="destino" name="destino" placeholder=""  th:attr="value = ${passagem.destino}">
-                    <input th:unless="${passagem != null}" type="text" class="form-control" id="destino" name="destino" placeholder="">
+                    <input type="text" class="form-control" id="destino" name="destino" placeholder=""  th:attr="value = ${passagem?.destino}">
                 </div>
 
                 </div>
@@ -98,13 +92,11 @@
                 
                 <div class="col-md-2">
                     <label for="dataIda" class="form-label">Data de Ida</label>
-                    <input th:if="${passagem != null}" type="date" class="form-control" id="dataIda" name="dataIda" placeholder=""  th:attr="value = ${passagem.dataIda}">
-                    <input th:unless="${passagem != null}" type="date" class="form-control" id="dataIda" name="dataIda" placeholder="">
+                    <input type="date" class="form-control" id="dataIda" name="dataIda" placeholder=""  th:attr="value = ${passagem?.dataIda}">
                 </div>
                 <div class="col-md-2">
                     <label for="dataVolta" class="form-label">Data de Volta</label>
-                    <input th:if="${passagem != null}" type="text" class="form-control" id="dataVolta" name="dataVolta" placeholder=""  th:attr="value = ${passagem.nome}">
-                    <input th:unless="${passagem != null}" type="text" class="form-control" id="dataVolta" name="dataVolta" placeholder="">
+                    <input type="date" class="form-control" id="dataVolta" name="dataVolta" placeholder=""  th:attr="value = ${passagem?.dataVolta}">
                 </div>
                 </div>
                 

@@ -38,7 +38,7 @@ public class Funcionario {
     private String cep;
     @NotNull
     private String senha;
-    @NotNull
+    @ManyToOne
     private TipoFuncionario tipoFuncionario;
 
 

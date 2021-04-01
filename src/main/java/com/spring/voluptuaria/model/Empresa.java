@@ -34,7 +34,7 @@ public class Empresa {
     private String cep;
     @NotNull
     private String localidade;
-    @NotNull
+    @ManyToOne
     private TipoEmpresa tipoEmpresa;
 
 }

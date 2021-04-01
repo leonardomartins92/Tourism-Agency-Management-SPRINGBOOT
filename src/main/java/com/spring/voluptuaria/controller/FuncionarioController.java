@@ -2,6 +2,7 @@ package com.spring.voluptuaria.controller;
 
 import com.spring.voluptuaria.model.Funcionario;
 import com.spring.voluptuaria.service.FuncionarioService;
+import com.spring.voluptuaria.service.TipoFuncionarioService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ import java.util.List;
 public class FuncionarioController {
     @Autowired
     FuncionarioService funcionarioService;
+    @Autowired
+    TipoFuncionarioService tipoFuncionarioService;
 
     @RequestMapping(value = "/pesquisaFuncionario", method = RequestMethod.GET)
     public ModelAndView preparaPesquisa(){
@@ -38,6 +41,7 @@ public class FuncionarioController {
 
             mv = new ModelAndView("manterFuncionario");
             mv.addObject("operacao", operacao);
+            mv.addObject("tipos", tipoFuncionarioService.findAll());
 
             if (!operacao.equals("Adicionar")) {
                 mv.addObject("funcionario", funcionarioService.findById(cod));

@@ -1,6 +1,8 @@
 package com.spring.voluptuaria.controller;
 
 import com.spring.voluptuaria.model.Passagem;
+import com.spring.voluptuaria.service.EmpresaService;
+import com.spring.voluptuaria.service.PacoteService;
 import com.spring.voluptuaria.service.PassagemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +19,17 @@ import java.util.List;
 public class PassagemController {
     @Autowired
     PassagemService passagemService;
+    @Autowired
+    EmpresaService empresaService;
+    @Autowired
+    PacoteService pacoteService;
 
     @RequestMapping(value = "/pesquisaPassagem", method = RequestMethod.GET)
     public ModelAndView preparaPesquisa(){
         ModelAndView mv = new ModelAndView("pesquisaPassagem");
-        List<Passagem> passagens = passagemService.findAll();
-        mv.addObject("passagens", passagens);
+
+        mv.addObject("passagens", passagemService.findAll());
+
         return mv;
     }
 
@@ -38,6 +45,8 @@ public class PassagemController {
 
             mv = new ModelAndView("manterPassagem");
             mv.addObject("operacao", operacao);
+            mv.addObject("pacotes", pacoteService.findAll());
+            mv.addObject("empresas", empresaService.findAll());
 
             if (!operacao.equals("Adicionar")) {
                 mv.addObject("passagem", passagemService.findById(cod));

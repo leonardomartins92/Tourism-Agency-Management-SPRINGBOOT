@@ -55,73 +55,61 @@
             <div class="row g-3 justify-content-md-center">
                 <div class="col-1">
                     <label for="cod" class="form-label">Código</label>
-                    <input th:if="${empresa != null}" type="text" class="form-control" id="cod" name="cod" placeholder=""  th:attr="value = ${empresa.id}" readonly>
-                    <input th:unless="${empresa != null}" type="text" class="form-control" id="cod" name="cod" placeholder="" readonly>
+                    <input type="text" class="form-control" id="cod" name="cod" placeholder=""  th:attr="value = ${empresa?.id}" readonly>
                 </div>
 
                 <div class="col-3">
                 <label for="nome" class="form-label">Nome</label>
-                    <input th:if="${empresa != null}" type="text" class="form-control" id="nome" name="nome" placeholder=""  th:attr="value = ${empresa.nome}" >
-                    <input th:unless="${empresa != null}" type="text" class="form-control" id="nome" name="nome" placeholder="">
+                    <input type="text" class="form-control" id="nome" name="nome" placeholder=""  th:attr="value = ${empresa?.nome}" >
                 </div>
             <div class="col-2">
                 <label for="cnpj" class="form-label">CNPJ</label>
-                <input th:if="${empresa != null}" type="text" class="form-control" id="cnpj" name="cnpj" placeholder=""  th:attr="value = ${empresa.cnpj}">
-                <input th:unless="${empresa != null}" type="text" class="form-control" id="cnpj" name="cnpj" placeholder="">
-            </div>
+                <input type="text" class="form-control" id="cnpj" name="cnpj" placeholder=""  th:attr="value = ${empresa?.cnpj}">
+                </div>
 
             <div class="col-md-2 ">
                 <label for="email" class="form-label">Email</label>
-                <input th:if="${empresa != null}" type="email" class="form-control" id="email" name="email" placeholder=""  th:attr="value = ${empresa.cnpj}">
-                <input th:unless="${empresa != null}" type="email" class="form-control" id="email" name="email" placeholder="">
+                <input type="email" class="form-control" id="email" name="email" placeholder=""  th:attr="value = ${empresa?.cnpj}">
             </div>
             </div>
              <div class="row g-3 justify-content-md-center">
-            <div class="col-md-3">
-                <label for="telefone" class="form-label">Telefone</label>
-                <input th:if="${empresa != null}" type="text" class="form-control" id="telefone" name="telefone" placeholder=""  th:attr="value = ${empresa.telefone}">
-                <input th:unless="${empresa != null}" type="text" class="form-control" id="telefone" name="telefone" placeholder="">
-            </div>
             <div class="col-md-2">
+                <label for="telefone" class="form-label">Telefone</label>
+                <input type="text" class="form-control" id="telefone" name="telefone" placeholder=""  th:attr="value = ${empresa?.telefone}">
+            </div>
+            <div class="col-md-1">
                 <label for="cep" class="form-label">CEP</label>
-                <input th:if="${empresa != null}" type="text" class="form-control" id="cep" name="cep" placeholder=""  th:attr="value = ${empresa.cep}">
-                <input th:unless="${empresa != null}" type="text" class="form-control" id="cep" name="cep" placeholder="">
+                <input type="text" class="form-control" id="cep" name="cep" placeholder=""  th:attr="value = ${empresa?.cep}">
             </div>
             <div class="col-md-1">
                 <label for="uf" class="form-label">UF</label>
-                <input th:if="${empresa != null}" type="text" class="form-control" id="uf" name="uf" placeholder=""  th:attr="value = ${empresa.uf}">
-                <input th:unless="${empresa != null}" type="text" class="form-control" id="uf" name="uf" placeholder="">
+                <input type="text" class="form-control" id="uf" name="uf" placeholder=""  th:attr="value = ${empresa?.uf}">
             </div>
             <div class="col-md-2">
                 <label for="inputType" class="form-label">Tipo</label>
-                <select th:each = "tipo:${tipos}" id="inputType" name="tipo" class="form-select">
-                         <option th:if = "${empresa.tipo == tipo}" selected th:attr="value = ${tipo.id}" ></option>
-                         <option th:unless= "${empresa.tipo == tipo}" th:attr="value = ${tipo.id}" ></option>
+                <select  id="inputType" name="tipo" class="form-select">
+                         <option th:each="tipo:${tipos}" th:if = "${empresa?.tipoEmpresa?.id == tipo.id}" th:attr="value = ${tipo?.id}" selected> <span th:text="${tipo?.tipo}"/></option>
+                         <option th:each="tipo:${tipos}" th:unless= "${empresa?.tipoEmpresa?.id == tipo.id}" th:attr="value = ${tipo?.id}" > <span th:text="${tipo?.tipo}"/></option>
                 </select>
             </div>
-             </div>
-             <div class="row g-3 justify-content-md-center">
+
                  <div class="col-md-2">
                      <label for="localidade" class="form-label">Cidade</label>
-                     <input th:if="${empresa != null}" type="text" class="form-control" name="localidade" id="localidade"  th:attr="value = ${empresa.localidade}">
-                     <input th:unless="${empresa != null}"  type="text" class="form-control" id="localidade" name="localidade" placeholder="">
+                     <input type="text" class="form-control" name="localidade" id="localidade"  th:attr="value = ${empresa?.localidade}">
                  </div>
              </div>
             <div class="row g-3 justify-content-md-center">
                 <div class="col-md-3">
                     <label for="logradouro" class="form-label">Logradouro</label>
-                    <input th:if="${empresa != null}" type="text" class="form-control" name="logradouro" id="logradouro" placeholder=""  th:attr="value = ${empresa.logradouro}" />
-                    <input th:unless="${empresa != null}"  type="text" class="form-control" id="logradouro" name="logradouro" placeholder="">
+                    <input type="text" class="form-control" name="logradouro" id="logradouro" placeholder=""  th:attr="value = ${empresa?.logradouro}" />
                 </div>
                 <div class="col-md-2">
                     <label for="numero" class="form-label">Número</label>
-                    <input th:if="${empresa != null}" type="text" class="form-control" name="numero" id="numero" placeholder=""  th:attr="value = ${empresa.numero}" />
-                    <input th:unless="${empresa != null}"  type="text" class="form-control" id="numero" name="numero" placeholder="">
+                    <input type="text" class="form-control" name="numero" id="numero" placeholder=""  th:attr="value = ${empresa?.numero}" />
                 </div>
                 <div class="col-3">
                     <label for="complemento" class="form-label">Complemento</label>
-                    <input th:if="${empresa != null}" type="text" class="form-control" name="complemento" id="complemento" placeholder=""  th:attr="value = ${empresa.complemento}">
-                    <input th:unless="${empresa != null}"  type="text" class="form-control" id="complemento" name="complemento" placeholder="">
+                    <input type="text" class="form-control" name="complemento" id="complemento" placeholder=""  th:attr="value = ${empresa?.complemento}">
                 </div>
             </div><br>
 

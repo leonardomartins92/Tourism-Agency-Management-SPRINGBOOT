@@ -2,6 +2,8 @@ package com.spring.voluptuaria.controller;
 
 import com.spring.voluptuaria.model.Destino;
 import com.spring.voluptuaria.service.DestinoService;
+import com.spring.voluptuaria.service.EmpresaService;
+import com.spring.voluptuaria.service.PacoteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,10 @@ import java.util.List;
 public class DestinoController {
     @Autowired
     DestinoService destinoService;
+    @Autowired
+    PacoteService pacoteService;
+    @Autowired
+    EmpresaService empresaService;
 
     @RequestMapping(value = "/pesquisaDestino", method = RequestMethod.GET)
     public ModelAndView preparaPesquisa(){
@@ -37,6 +43,9 @@ public class DestinoController {
 
             mv = new ModelAndView("manterDestino");
             mv.addObject("operacao", operacao);
+            mv.addObject("empresas", empresaService.findAll());
+            mv.addObject("pacotes", pacoteService.findAll());
+
 
             if (!operacao.equals("Adicionar")) {
                 mv.addObject("destino", destinoService.findById(cod));
