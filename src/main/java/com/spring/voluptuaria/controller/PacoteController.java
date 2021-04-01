@@ -1,8 +1,9 @@
 package com.spring.voluptuaria.controller;
 
-import com.spring.voluptuaria.model.Cliente;
+import com.spring.voluptuaria.model.Pacote;
 import com.spring.voluptuaria.model.Pacote;
 import com.spring.voluptuaria.service.ClienteService;
+import com.spring.voluptuaria.service.PacoteService;
 import com.spring.voluptuaria.service.FuncionarioService;
 import com.spring.voluptuaria.service.PacoteService;
 import lombok.extern.slf4j.Slf4j;
@@ -34,32 +35,42 @@ public class PacoteController {
     }
 
     @RequestMapping(value = "/manterPacote", method = RequestMethod.GET)
-    public ModelAndView getView(@RequestParam String acao, @RequestParam String operacao,
+    public ModelAndView getView(@RequestParam String operacao,
                                 @RequestParam(required = false) Long cod){
         ModelAndView mv;
-        log.info("ação:"+acao);
+
         log.info("operacao:"+operacao);
         log.info("cod:"+cod);
-
-        if(acao.equals("preparaOperacao")){
 
             mv = new ModelAndView("manterPacote");
             mv.addObject("operacao", operacao);
             mv.addObject("funcionarios",funcionarioService.findAll());
-            List<Cliente> clientes = clienteService.findAll();
-            log.info("clientes:"+clientes);
-            mv.addObject("clientes", clientes);
+            mv.addObject("clientes", clienteService.findAll());
 
             if (!operacao.equals("Adicionar")) {
                 mv.addObject("pacote", pacoteService.findById(cod));
             }
-        }
-        else {
-            mv = new ModelAndView("pesquisaPacote");
-        }
-
         return mv;
     }
 
+    @RequestMapping(value = "/manterPacote", method = RequestMethod.POST)
+    public ModelAndView formulario(@RequestParam String operacao, Pacote pacote) {
+
+       if(operacao.equals("Excluir")){
+           pacoteService.delete(pacote);
+       }
+       else{
+           pacote.setCliente(clienteService.findById(pacote.getIdCliente()));
+           pacote.setFuncionario(funcionarioService.findById(pacote.getIdFuncionario()));
+           if(operacao.equals("Adicionar")){
+               pacoteService.save(pacote);
+           }
+           else if(operacao.equals("Editar")){
+
+           }
+       }
+
+        return  preparaPesquisa();
+    }
 
 }

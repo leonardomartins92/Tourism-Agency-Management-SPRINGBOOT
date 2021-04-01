@@ -73,8 +73,8 @@
                     <tr th:each="funcionario:${funcionarios}">
                         <td th:text="${funcionario.id}"/>
                         <td th:text="${funcionario.nome}"/>
-                        <td><a th:href="@{manterFuncionario(acao='preparaOperacao', operacao='Editar', cod=${funcionario.id})}" class="btn btn-primary btn-sm">Editar</a></td>
-                        <td><a th:href="@{manterFuncionario(acao='preparaOperacao', operacao='Excluir', cod=${funcionario.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
+                        <td><a th:href="@{manterFuncionario(operacao='Editar', cod=${funcionario.id})}" class="btn btn-primary btn-sm">Editar</a></td>
+                        <td><a th:href="@{manterFuncionario(operacao='Excluir', cod=${funcionario.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
                     </tr>
 
             </tbody>      
@@ -83,7 +83,7 @@
 
         <div class="col-md-2 ">
             <div class="list-group">
-                <a th:href="@{manterFuncionario(acao='preparaOperacao', operacao='Adicionar')}" class="btn btn-success">Adicionar</a>
+                <a th:href="@{manterFuncionario(operacao='Adicionar')}" class="btn btn-success">Adicionar</a>
             </div>
         </div>
           

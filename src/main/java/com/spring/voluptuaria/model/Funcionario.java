@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Funcionario {
@@ -40,6 +39,23 @@ public class Funcionario {
     private String senha;
     @ManyToOne
     private TipoFuncionario tipoFuncionario;
+    private Long idTipoFuncionario;
+
+    public Funcionario(Long id, String cpf, String nome, String telefone, String email, String logradouro, String numero, String complemento, String uf, String localidade, String cep, String senha, TipoFuncionario tipoFuncionario) {
+        this.id = id;
+        this.cpf = cpf;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.email = email;
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.uf = uf;
+        this.localidade = localidade;
+        this.cep = cep;
+        this.senha = senha;
+        this.tipoFuncionario = tipoFuncionario;
+    }
 
 
 }

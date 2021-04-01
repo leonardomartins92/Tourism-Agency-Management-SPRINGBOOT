@@ -63,6 +63,7 @@
         <table class="table table-striped">
             <thead>  
                 <tr>
+                    <th>Código do Pacote</th>
                     <th>Código do Funcionário</th>
                     <th>Código do Cliente</th>
                     <th colspan="2">Ação</th>
@@ -71,10 +72,11 @@
             <tbody>
 
                     <tr th:each="pacote:${pacotes}">
+                        <td th:text="${pacote.id}"/>
                         <td th:text="${pacote.funcionario.id}"/>
                         <td th:text="${pacote.cliente.id}"/>
-                        <td><a th:href="@{manterPacote(acao='preparaOperacao', operacao='Editar', cod=${pacote.id})}" class="btn btn-primary btn-sm">Editar</a></td>
-                        <td><a th:href="@{manterPacote(acao='preparaOperacao', operacao='Excluir', cod=${pacote.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
+                        <td><a th:href="@{manterPacote(operacao='Editar', cod=${pacote.id})}" class="btn btn-primary btn-sm">Editar</a></td>
+                        <td><a th:href="@{manterPacote(operacao='Excluir', cod=${pacote.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
                     </tr>
 
             </tbody> 
@@ -82,7 +84,7 @@
 
         <div class="col-md-2 ">
             <div class="list-group">
-                <a th:href="@{manterPacote(acao='preparaOperacao', operacao='Adicionar')}" class="btn btn-success">Adicionar</a>
+                <a th:href="@{manterPacote(operacao='Adicionar')}" class="btn btn-success">Adicionar</a>
             </div>
         </div>
 

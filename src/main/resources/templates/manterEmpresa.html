@@ -51,11 +51,11 @@
         <h2><span th:text="${operacao}"></span> Empresa</h2>
         
     <div class="col">
-        <form  action="ManterEmpresaController?acao=confirmaOperacao&operacao=${operacao}" method="post">
+        <form  action="#" th:action="@{manterEmpresa(operacao=${operacao})}" method="post" th:object="${empresa}">
             <div class="row g-3 justify-content-md-center">
                 <div class="col-1">
-                    <label for="cod" class="form-label">Código</label>
-                    <input type="text" class="form-control" id="cod" name="cod" placeholder=""  th:attr="value = ${empresa?.id}" readonly>
+                    <label for="id" class="form-label">Código</label>
+                    <input type="text" class="form-control" id="id" name="id" placeholder=""  th:attr="value = ${empresa?.id}" readonly>
                 </div>
 
                 <div class="col-3">
@@ -87,7 +87,7 @@
             </div>
             <div class="col-md-2">
                 <label for="inputType" class="form-label">Tipo</label>
-                <select  id="inputType" name="tipo" class="form-select">
+                <select  id="inputType" name="idTipoEmpresa" class="form-select">
                          <option th:each="tipo:${tipos}" th:if = "${empresa?.tipoEmpresa?.id == tipo.id}" th:attr="value = ${tipo?.id}" selected> <span th:text="${tipo?.tipo}"/></option>
                          <option th:each="tipo:${tipos}" th:unless= "${empresa?.tipoEmpresa?.id == tipo.id}" th:attr="value = ${tipo?.id}" > <span th:text="${tipo?.tipo}"/></option>
                 </select>
@@ -114,7 +114,7 @@
             </div><br>
 
             <div class="col-12">
-                <button type="submit" class="btn btn-primary" id="botaoSubmit">Salvar</button>
+                <button type="submit" class="btn btn-primary" id="botaoSubmit">Confirmar</button>
             </div>
         </form>
     </div>

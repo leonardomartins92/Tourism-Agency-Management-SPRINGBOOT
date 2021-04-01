@@ -55,12 +55,11 @@
 
         <h2><span th:text="${operacao}"/> Pacote</h2>
 
-    <form action="ManterPacoteController?acao=confirmaOperacao&operacao=${operacao}&cod=${idPacote}" method="post">
-        <div class="row g-3 justify-content-md-center">
+    <form  action="#" th:action="@{manterPacote(operacao=${operacao})}" method="post" th:object="${pacote}">   <div class="row g-3 justify-content-md-center">
         
         <div class="col-md-1">
-            <label for="cod" class="form-label">Código</label>
-            <input  type="text" class="form-control" id="cod" name="id" placeholder=""  th:attr="value = ${pacote?.id}" readonly>
+            <label for="id" class="form-label">Código</label>
+            <input  type="text" class="form-control" id="id" name="id" placeholder=""  th:attr="value = ${pacote?.id}" readonly>
         </div>
              
         <div class="col-md-4">

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 @Slf4j
 @Controller
 public class ClienteController {
@@ -20,20 +19,14 @@ public class ClienteController {
     @RequestMapping(value = "/pesquisaCliente", method = RequestMethod.GET)
     public ModelAndView preparaPesquisa(){
         ModelAndView mv = new ModelAndView("pesquisaCliente");
-        List<Cliente> clientes = clienteService.findAll();
-        mv.addObject("clientes", clientes);
+        mv.addObject("clientes", clienteService.findAll());
         return mv;
     }
 
     @RequestMapping(value = "/manterCliente", method = RequestMethod.GET)
-    public ModelAndView getView(@RequestParam String acao, @RequestParam String operacao,
+    public ModelAndView preparaManter(@RequestParam String operacao,
                         @RequestParam(required = false) Long cod){
         ModelAndView mv;
-        log.info("ação:"+acao);
-        log.info("operacao:"+operacao);
-        log.info("cod:"+cod);
-
-        if(acao.equals("preparaOperacao")){
 
             mv = new ModelAndView("manterCliente");
             mv.addObject("operacao", operacao);
@@ -41,12 +34,25 @@ public class ClienteController {
             if (!operacao.equals("Adicionar")) {
                  mv.addObject("cliente", clienteService.findById(cod));
             }
-        }
-        else {
-            mv = new ModelAndView("pesquisaCliente");
+        return mv;
+    }
+
+    @RequestMapping(value = "/manterCliente", method = RequestMethod.POST)
+    public ModelAndView formulario(@RequestParam String operacao, Cliente cliente) {
+
+        switch (operacao){
+            case ("Excluir"):
+                clienteService.delete(cliente);
+                break;
+            case("Editar"):
+                clienteService.update(cliente);
+                break;
+            case("Adicionar"):
+                clienteService.save(cliente);
+                break;
         }
 
-        return mv;
+        return preparaPesquisa();
     }
 
 

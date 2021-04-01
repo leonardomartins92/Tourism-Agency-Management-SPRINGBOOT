@@ -27,8 +27,9 @@ public class ClienteService{
         clienteRepository.delete(cliente);
     }
     public void update(Cliente cliente){
-        clienteRepository.delete(findById(cliente.getId()));
-        clienteRepository.save(cliente);
+        Cliente clienteBD = findById(cliente.getId());
+
+
     }
 
 }

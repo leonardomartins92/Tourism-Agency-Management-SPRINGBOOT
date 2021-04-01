@@ -1,6 +1,7 @@
 package com.spring.voluptuaria.controller;
 
 import com.spring.voluptuaria.model.Funcionario;
+import com.spring.voluptuaria.model.Funcionario;
 import com.spring.voluptuaria.service.FuncionarioService;
 import com.spring.voluptuaria.service.TipoFuncionarioService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,14 +31,12 @@ public class FuncionarioController {
     }
 
     @RequestMapping(value = "/manterFuncionario", method = RequestMethod.GET)
-    public ModelAndView getView(@RequestParam String acao, @RequestParam String operacao,
+    public ModelAndView getView(@RequestParam String operacao,
                                 @RequestParam(required = false) Long cod){
         ModelAndView mv;
-        log.info("ação:"+acao);
+
         log.info("operacao:"+operacao);
         log.info("cod:"+cod);
-
-        if(acao.equals("preparaOperacao")){
 
             mv = new ModelAndView("manterFuncionario");
             mv.addObject("operacao", operacao);
@@ -46,13 +45,28 @@ public class FuncionarioController {
             if (!operacao.equals("Adicionar")) {
                 mv.addObject("funcionario", funcionarioService.findById(cod));
             }
-        }
-        else {
-            mv = new ModelAndView("pesquisaFuncionario");
-        }
 
         return mv;
     }
+    @RequestMapping(value = "/manterFuncionario", method = RequestMethod.POST)
+    public ModelAndView formulario(@RequestParam String operacao, Funcionario funcionario) {
+        ModelAndView mv;
 
+        if(operacao.equals("Excluir")){
+            funcionarioService.delete(funcionario);
+        }
+
+        else{
+            funcionario.setTipoFuncionario(tipoFuncionarioService.findById(funcionario.getIdTipoFuncionario()));
+            if (operacao.equals("Adicionar")){
+                funcionarioService.save(funcionario);
+            }
+            else if(operacao.equals("Editar")){
+
+            }
+        }
+
+        return  preparaPesquisa();
+    }
 
 }

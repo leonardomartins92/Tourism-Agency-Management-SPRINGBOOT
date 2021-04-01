@@ -49,18 +49,18 @@
     <h2><span th:text="${operacao}"></span> Funcionário</h2><br>
             
     <div class="col">
-        <form  action="ManterFuncionarioController?acao=confirmaOperacao&operacao=${operacao}" method="post">
+        <form  action="#" th:action="@{manterFuncionario(operacao=${operacao})}" method="post" th:object="${funcionario}">
             <div class="row g-3 justify-content-md-center">
                 <div class="row g-3 justify-content-md-center">
 
                     <div class="col-1">
-                        <label for="cod" class="form-label">Código</label>
-                        <input type="text" class="form-control" id="cod" name="cod" placeholder=""  th:attr="value = ${funcionario?.id}" readonly>
+                        <label for="id" class="form-label">Código</label>
+                        <input type="text" class="form-control" id="id" name="id" placeholder=""  th:attr="value = ${funcionario?.id}" readonly>
                     </div>
 
                     <div class="col-3">
-                        <label for="name" class="form-label">Nome</label>
-                        <input type="text" class="form-control" id="name" name="nome" placeholder=""  th:attr="value = ${funcionario?.nome}">
+                        <label for="nome" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="nome" name="nome" placeholder=""  th:attr="value = ${funcionario?.nome}">
                     </div>
 
                     <div class="col-2">
@@ -113,7 +113,7 @@
             </div>
             <div class="col-md-2">
                 <label for="funcao" class="form-label">Função</label>
-                <select id="funcao" name="funcao" class="form-select">
+                <select id="funcao" name="idTipoFuncionario" class="form-select">
                     <option th:each="tipo:${tipos}"  th:if="${funcionario?.tipoFuncionario?.id == tipo?.id}" th:attr="value=${tipo?.id}" selected> <span th:text="${tipo?.tipo}"/></option>
                     <option th:each="tipo:${tipos}" th:unless="${funcionario?.tipoFuncionario?.id == tipo?.id}" th:attr="value=${tipo?.id}"><span th:text="${tipo?.tipo}"/></option>
                 </select>
@@ -123,7 +123,9 @@
 
                 <button type="submit" class="btn btn-primary" id="botaoSubmit">Confirmar</button>
             </div>
+            </div>
         </form>
+
     </div>
 
     <script type="text/javascript" th:src="@{/scripts/ViaCep.js}"></script>

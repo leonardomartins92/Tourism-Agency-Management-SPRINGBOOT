@@ -1,6 +1,7 @@
 package com.spring.voluptuaria.controller;
 
 import com.spring.voluptuaria.model.Passagem;
+import com.spring.voluptuaria.model.Passagem;
 import com.spring.voluptuaria.service.EmpresaService;
 import com.spring.voluptuaria.service.PacoteService;
 import com.spring.voluptuaria.service.PassagemService;
@@ -34,14 +35,12 @@ public class PassagemController {
     }
 
     @RequestMapping(value = "/manterPassagem", method = RequestMethod.GET)
-    public ModelAndView getView(@RequestParam String acao, @RequestParam String operacao,
+    public ModelAndView getView(@RequestParam String operacao,
                                 @RequestParam(required = false) Long cod){
         ModelAndView mv;
-        log.info("ação:"+acao);
+
         log.info("operacao:"+operacao);
         log.info("cod:"+cod);
-
-        if(acao.equals("preparaOperacao")){
 
             mv = new ModelAndView("manterPassagem");
             mv.addObject("operacao", operacao);
@@ -51,14 +50,28 @@ public class PassagemController {
             if (!operacao.equals("Adicionar")) {
                 mv.addObject("passagem", passagemService.findById(cod));
             }
-        }
-        else {
-            mv = new ModelAndView("pesquisaPassagem");
-        }
 
         return mv;
     }
 
+    @RequestMapping(value = "/manterPassagem", method = RequestMethod.POST)
+    public ModelAndView formulario(@RequestParam String operacao, Passagem passagem) {
 
+        if(operacao.equals("Excluir")){
+            passagemService.delete(passagem);
+        }
+        else{
+            passagem.setEmpresa(empresaService.findById(passagem.getIdEmpresa()));
+            passagem.setPacote(pacoteService.findById(passagem.getIdPacote()));
+            if(operacao.equals("Adicionar")){
+                passagemService.save(passagem);
+            }
+            else if(operacao.equals("Editar")){
+
+            }
+        }
+
+        return preparaPesquisa();
+    }
 
 }

@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Empresa {
@@ -36,5 +35,20 @@ public class Empresa {
     private String localidade;
     @ManyToOne
     private TipoEmpresa tipoEmpresa;
+    private Long idTipoEmpresa;
 
+    public Empresa(Long id, String cnpj, String nome, String telefone, String email, String logradouro, String numero, String complemento, String uf, String cep, String localidade, TipoEmpresa tipoEmpresa) {
+        this.id = id;
+        this.cnpj = cnpj;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.email = email;
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.uf = uf;
+        this.cep = cep;
+        this.localidade = localidade;
+        this.tipoEmpresa = tipoEmpresa;
+    }
 }

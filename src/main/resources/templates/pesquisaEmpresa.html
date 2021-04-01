@@ -72,8 +72,8 @@
                 <tr th:each="empresa:${empresas}">
                     <td th:text="${empresa.nome}"/>
                     <td th:text="${empresa.tipoEmpresa.getTipo()}"/>
-                    <td><a th:href="@{manterEmpresa(acao='preparaOperacao', operacao='Editar', cod=${empresa.id})}" class="btn btn-primary btn-sm">Editar</a></td>
-                    <td><a th:href="@{manterEmpresa(acao='preparaOperacao', operacao='Excluir', cod=${empresa.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
+                    <td><a th:href="@{manterEmpresa(operacao='Editar', cod=${empresa.id})}" class="btn btn-primary btn-sm">Editar</a></td>
+                    <td><a th:href="@{manterEmpresa(operacao='Excluir', cod=${empresa.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
                 </tr>
 
         </tbody>
@@ -81,7 +81,7 @@
     </table>
         <div class="col-md-2 ">
             <div class="list-group">
-                <a th:href="@{manterEmpresa(acao='preparaOperacao', operacao='Adicionar')}" class="btn btn-success">Adicionar</a>
+                <a th:href="@{manterEmpresa(operacao='Adicionar')}" class="btn btn-success">Adicionar</a>
             </div>
         </div>
     </div>

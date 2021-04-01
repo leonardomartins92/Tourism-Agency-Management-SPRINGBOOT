@@ -1,13 +1,11 @@
 package com.spring.voluptuaria.model;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Pacote {
@@ -22,5 +20,15 @@ public class Pacote {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Funcionario funcionario;
+
+    private Long idFuncionario;
+    private Long idCliente;
+
+    public Pacote(Long id, Cliente cliente, Funcionario funcionario) {
+        this.id = id;
+        this.cliente = cliente;
+        this.funcionario = funcionario;
+    }
+
 
 }

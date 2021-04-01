@@ -1,6 +1,7 @@
 package com.spring.voluptuaria.controller;
 
 import com.spring.voluptuaria.model.Empresa;
+import com.spring.voluptuaria.model.Empresa;
 import com.spring.voluptuaria.model.TipoEmpresa;
 import com.spring.voluptuaria.service.EmpresaService;
 import com.spring.voluptuaria.service.TipoEmpresaService;
@@ -32,14 +33,12 @@ public class EmpresaController {
     }
 
     @RequestMapping(value = "/manterEmpresa", method = RequestMethod.GET)
-    public ModelAndView getView(@RequestParam String acao, @RequestParam String operacao,
+    public ModelAndView getView(@RequestParam String operacao,
                                 @RequestParam(required = false) Long cod){
         ModelAndView mv;
-        log.info("ação:"+acao);
+
         log.info("operacao:"+operacao);
         log.info("cod:"+cod);
-
-        if(acao.equals("preparaOperacao")){
 
             mv = new ModelAndView("manterEmpresa");
             mv.addObject("operacao", operacao);
@@ -48,12 +47,29 @@ public class EmpresaController {
             if (!operacao.equals("Adicionar")) {
                 mv.addObject("empresa", empresaService.findById(cod));
             }
-        }
-        else {
-            mv = new ModelAndView("pesquisaEmpresa");
-        }
 
         return mv;
+    }
+    @RequestMapping(value = "/manterEmpresa", method = RequestMethod.POST)
+    public ModelAndView formulario(@RequestParam String operacao, Empresa empresa) {
+        log.info("nome"+empresa.getNome());
+        log.info("tipo"+empresa.getIdTipoEmpresa());
+
+       if(operacao.equals("Excluir")){
+           empresaService.delete(empresa);
+       }
+       else{
+           empresa.setTipoEmpresa(tipoEmpresaService.findById(empresa.getIdTipoEmpresa()));
+           if(operacao.equals("Adicionar")){
+               empresaService.save(empresa);
+           }
+           else if(operacao.equals("Editar")){
+
+           }
+       }
+
+
+        return preparaPesquisa();
     }
 
 
