@@ -16,20 +16,16 @@ public class ClienteService{
         return clienteRepository.findAll();
     }
 
-   public Cliente findById(Long id) {
+    public Cliente findById(Long id) {
         return clienteRepository.findById(id).get();
     }
 
-   public Cliente save(Cliente cliente) {
+    public Cliente save(Cliente cliente) {
         return clienteRepository.save(cliente);
     }
+
     public void delete(Cliente cliente){
         clienteRepository.delete(cliente);
     }
-    public void update(Cliente cliente){
-        Cliente clienteBD = findById(cliente.getId());
 
-
-    }
-
-}
+   }

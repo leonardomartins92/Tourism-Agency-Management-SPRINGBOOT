@@ -63,12 +63,7 @@ public class PassagemController {
         else{
             passagem.setEmpresa(empresaService.findById(passagem.getIdEmpresa()));
             passagem.setPacote(pacoteService.findById(passagem.getIdPacote()));
-            if(operacao.equals("Adicionar")){
-                passagemService.save(passagem);
-            }
-            else if(operacao.equals("Editar")){
-
-            }
+            passagemService.save(passagem);
         }
 
         return preparaPesquisa();

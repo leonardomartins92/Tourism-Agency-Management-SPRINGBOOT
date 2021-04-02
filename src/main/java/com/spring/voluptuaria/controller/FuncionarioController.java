@@ -58,12 +58,7 @@ public class FuncionarioController {
 
         else{
             funcionario.setTipoFuncionario(tipoFuncionarioService.findById(funcionario.getIdTipoFuncionario()));
-            if (operacao.equals("Adicionar")){
-                funcionarioService.save(funcionario);
-            }
-            else if(operacao.equals("Editar")){
-
-            }
+            funcionarioService.save(funcionario);
         }
 
         return  preparaPesquisa();

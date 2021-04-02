@@ -60,12 +60,7 @@ public class EmpresaController {
        }
        else{
            empresa.setTipoEmpresa(tipoEmpresaService.findById(empresa.getIdTipoEmpresa()));
-           if(operacao.equals("Adicionar")){
-               empresaService.save(empresa);
-           }
-           else if(operacao.equals("Editar")){
-
-           }
+           empresaService.save(empresa);
        }
 
 

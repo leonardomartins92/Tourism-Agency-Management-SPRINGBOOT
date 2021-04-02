@@ -40,19 +40,14 @@ public class ClienteController {
     @RequestMapping(value = "/manterCliente", method = RequestMethod.POST)
     public ModelAndView formulario(@RequestParam String operacao, Cliente cliente) {
 
-        switch (operacao){
-            case ("Excluir"):
-                clienteService.delete(cliente);
-                break;
-            case("Editar"):
-                clienteService.update(cliente);
-                break;
-            case("Adicionar"):
-                clienteService.save(cliente);
-                break;
-        }
+      if(operacao.equals("Excluir")){
+          clienteService.delete(cliente);
+      }
+      else{
+          clienteService.save(cliente);
+      }
 
-        return preparaPesquisa();
+         return preparaPesquisa();
     }
 
 

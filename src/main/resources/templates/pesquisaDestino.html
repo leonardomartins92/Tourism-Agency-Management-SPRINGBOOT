@@ -60,17 +60,17 @@
             <thead>  
                 <tr>
                     <th>Código</th>
-                    <th>Data Inicial</th>
-                    <th>Data Final</th>
-                    <th colspan="3">Ação</th>
+                    <th>Código Pacote</th>
+                    <th>Código Empresa</th>
+                    <th colspan="2">Ação</th>
                 </tr>
             </thead>
             <tbody>
 
                     <tr th:each="destino:${destinos}">
                         <td th:text = "${destino.id}" />
-                        <td th:text = "${destino.inicio}" />
-                        <td th:text = "${destino.fim}" />
+                        <td th:text = "${destino.pacote.id}" />
+                        <td th:text = "${destino.empresa.id}" />
                         <td><a th:href="@{manterDestino(operacao='Editar', cod=${destino.id})}" class="btn btn-primary btn-sm">Editar</a></td>
                         <td><a th:href="@{manterDestino(operacao='Excluir', cod=${destino.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
                     </tr>

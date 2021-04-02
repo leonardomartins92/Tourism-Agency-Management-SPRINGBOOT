@@ -62,12 +62,7 @@ public class PacoteController {
        else{
            pacote.setCliente(clienteService.findById(pacote.getIdCliente()));
            pacote.setFuncionario(funcionarioService.findById(pacote.getIdFuncionario()));
-           if(operacao.equals("Adicionar")){
-               pacoteService.save(pacote);
-           }
-           else if(operacao.equals("Editar")){
-
-           }
+           pacoteService.save(pacote);
        }
 
         return  preparaPesquisa();

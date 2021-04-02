@@ -1,10 +1,13 @@
 package com.spring.voluptuaria.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -22,12 +25,12 @@ public class Passagem {
     private String destino;
 
     @NotNull
-   // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    private String dataIda;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dataIda;
 
     @NotNull
-   // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    private String dataVolta;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dataVolta;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -39,7 +42,7 @@ public class Passagem {
     private Long idPacote;
     private Long idEmpresa;
 
-    public Passagem(Long id, String origem, String destino, String dataIda, String dataVolta, Pacote pacote, Empresa empresa) {
+    public Passagem(Long id, String origem, String destino, LocalDate dataIda, LocalDate dataVolta, Pacote pacote, Empresa empresa) {
         this.id = id;
         this.origem = origem;
         this.destino = destino;

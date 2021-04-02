@@ -1,16 +1,12 @@
 package com.spring.voluptuaria.controller;
 
-import com.spring.voluptuaria.model.Cliente;
 import com.spring.voluptuaria.model.Destino;
-import com.spring.voluptuaria.model.Empresa;
-import com.spring.voluptuaria.model.Pacote;
 import com.spring.voluptuaria.service.DestinoService;
 import com.spring.voluptuaria.service.EmpresaService;
 import com.spring.voluptuaria.service.PacoteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,9 +36,6 @@ public class DestinoController {
                                 @RequestParam(required = false) Long cod){
         ModelAndView mv;
 
-        log.info("operacao:"+operacao);
-        log.info("cod:"+cod);
-
             mv = new ModelAndView("manterDestino");
             mv.addObject("operacao", operacao);
             mv.addObject("empresas", empresaService.findAll());
@@ -56,10 +49,6 @@ public class DestinoController {
 
     @RequestMapping(value = "/manterDestino", method = RequestMethod.POST)
     public ModelAndView formulario(@RequestParam String operacao, Destino destino) {
-        log.info("paco"+destino.getIdPacote());
-        log.info("emp:"+destino.getIdEmpresa());
-        log.info("ini:"+destino.getInicio());
-        log.info("fim:"+destino.getFim());
 
         if(operacao.equals("Excluir")){
             destinoService.delete(destino);
@@ -67,14 +56,8 @@ public class DestinoController {
         else{
             destino.setEmpresa(empresaService.findById(destino.getIdEmpresa()));
             destino.setPacote(pacoteService.findById(destino.getIdPacote()));
-            if (operacao.equals("Adicionar")){
-                destinoService.save(destino);
-            }
-            else if (operacao.equals("Editar")){
-
-            }
+            destinoService.save(destino);
         }
-
 
         return preparaPesquisa();
     }
