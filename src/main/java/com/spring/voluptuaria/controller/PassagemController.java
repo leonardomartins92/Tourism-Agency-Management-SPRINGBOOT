@@ -1,5 +1,6 @@
 package com.spring.voluptuaria.controller;
 
+import com.spring.voluptuaria.model.Empresa;
 import com.spring.voluptuaria.model.Passagem;
 import com.spring.voluptuaria.model.Passagem;
 import com.spring.voluptuaria.service.EmpresaService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -35,21 +37,26 @@ public class PassagemController {
     }
 
     @RequestMapping(value = "/manterPassagem", method = RequestMethod.GET)
-    public ModelAndView getView(@RequestParam String operacao,
+    public ModelAndView preparaManter(@RequestParam String operacao,
                                 @RequestParam(required = false) Long cod){
         ModelAndView mv;
 
-        log.info("operacao:"+operacao);
-        log.info("cod:"+cod);
+        mv = new ModelAndView("manterPassagem");
+        mv.addObject("operacao", operacao);
+        mv.addObject("pacotes", pacoteService.findAll());
+        List<Empresa> empresas = new ArrayList<>();
 
-            mv = new ModelAndView("manterPassagem");
-            mv.addObject("operacao", operacao);
-            mv.addObject("pacotes", pacoteService.findAll());
-            mv.addObject("empresas", empresaService.findAll());
-
-            if (!operacao.equals("Adicionar")) {
-                mv.addObject("passagem", passagemService.findById(cod));
+        for(Empresa empresa:empresaService.findAll()){
+            if(empresa.getTipoEmpresa().getTipo().equals("AEREA")){
+                empresas.add(empresa);
             }
+        }
+
+        mv.addObject("empresas", empresas);
+
+        if (!operacao.equals("Adicionar")) {
+            mv.addObject("passagem", passagemService.findById(cod));
+        }
 
         return mv;
     }
