@@ -17,12 +17,15 @@
 
 
         <div class="align-items-start d-flex justify-content-center form-check" style="text-align: center">   
-            <form action="IndexController" method="post">
+            <form th:action="@{/login}"  method="post" >
              <h1>Login</h1> <br>
-             <label for="exampleInputEmail1" class="form-label" >CPF</label> 
-             <input type="text" class="form-control" name="cpf" style="width:400px " id="exampleInputEmail1" aria-describedby="emailHelp">
-             <br><label for="exampleInputPassword1" class="form-label">Senha</label>                      
-             <br><input type="password" class="form-control" name="senha"  style="width:400px " id="exampleInputPassword1" >
+
+             <label for="email" class="form-label" >CPF</label>
+             <input type="text" class="form-control" name="username" style="width:400px"  id="email" aria-describedby="emailHelp">
+             <br><label for="password" class="form-label">Senha</label>
+             <br><input type="password" class="form-control" name="password"  style="width:400px "  id="password" >
+                <div th:if="${param.error}"><p>Senha ou usuário inválido</p> </div>
+                <div th:if="${param.logout}"><p>Desconectado</p> </div>
              <br><button type="submit" class="btn btn-primary">Entrar</button>                          
             </form>    
                
