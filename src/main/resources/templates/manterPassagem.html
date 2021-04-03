@@ -90,17 +90,19 @@
                 <div class="row g-3 justify-content-md-center">
                 
                 <div class="col-md-2">
-                    <label for="dataIda" class="form-label">Data de Ida</label>
-                    <input type="date" class="form-control" id="dataIda" name="dataIda" placeholder=""  th:attr="value = ${passagem?.dataIda}">
+                    <label for="ida" class="form-label">Data de Ida</label>
+                    <input type="date" class="form-control" onchange="verificaData()" id="ida" name="dataIda" placeholder=""  th:attr="value = ${passagem?.dataIda}">
                 </div>
                 <div class="col-md-2">
-                    <label for="dataVolta" class="form-label">Data de Volta</label>
-                    <input type="date" class="form-control" id="dataVolta" name="dataVolta" placeholder=""  th:attr="value = ${passagem?.dataVolta}">
+                    <label for="volta" class="form-label">Data de Volta</label>
+                    <input type="date" class="form-control" onchange="verificaData()" id="volta" name="dataVolta" placeholder=""  th:attr="value = ${passagem?.dataVolta}">
                 </div>
                 </div>
+
+                <h6 class="form-label" id="msgErro"></h6>
                 
-                <div class="col-4">
-                    <button type="submit" class="btn btn-primary" id="botaoSubmit">Confirmar</button>
+                <div  class="col-4">
+                    <button  type="submit" class="btn btn-primary" id="botaoSubmit">Confirmar</button>
                 </div>
                 </div>
             </form>
