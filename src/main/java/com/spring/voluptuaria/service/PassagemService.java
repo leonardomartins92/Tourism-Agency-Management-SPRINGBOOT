@@ -26,8 +26,5 @@ public class PassagemService {
     public void delete(Passagem passagem){
         passagemRepository.delete(passagem);
     }
-    public void update(Passagem passagem){
-        passagemRepository.delete(findById(passagem.getId()));
-        passagemRepository.save(passagem);
-    }
+
 }

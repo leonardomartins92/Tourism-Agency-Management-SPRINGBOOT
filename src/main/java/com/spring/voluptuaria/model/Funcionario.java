@@ -40,6 +40,7 @@ public class Funcionario {
     @ManyToOne
     private TipoFuncionario tipoFuncionario;
     private Long idTipoFuncionario;
+    private String roles;
 
     public Funcionario(Long id, String cpf, String nome, String telefone, String email, String logradouro, String numero, String complemento, String uf, String localidade, String cep, String senha, TipoFuncionario tipoFuncionario) {
         this.id = id;
@@ -55,6 +56,7 @@ public class Funcionario {
         this.cep = cep;
         this.senha = senha;
         this.tipoFuncionario = tipoFuncionario;
+
     }
 
 

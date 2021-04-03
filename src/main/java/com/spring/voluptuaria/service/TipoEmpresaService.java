@@ -19,14 +19,4 @@ public class TipoEmpresaService {
         return tipoEmpresaRepository.findById(id).get();
     }
 
-    public TipoEmpresa save(TipoEmpresa tipoEmpresa) {
-        return tipoEmpresaRepository.save(tipoEmpresa);
-    }
-    public void delete(TipoEmpresa tipoEmpresa){
-        tipoEmpresaRepository.delete(tipoEmpresa);
-    }
-    public void update(TipoEmpresa tipoEmpresa){
-        tipoEmpresaRepository.delete(findById(tipoEmpresa.getId()));
-        tipoEmpresaRepository.save(tipoEmpresa);
-    }
 }

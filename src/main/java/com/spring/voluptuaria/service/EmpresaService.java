@@ -26,8 +26,5 @@ public class EmpresaService {
     public void delete(Empresa empresa){
         empresaRepository.delete(empresa);
     }
-    public void update(Empresa empresa){
-        empresaRepository.delete(findById(empresa.getId()));
-        empresaRepository.save(empresa);
-    }
+
 }

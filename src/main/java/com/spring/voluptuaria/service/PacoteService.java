@@ -26,8 +26,5 @@ public class PacoteService {
     public void delete(Pacote pacote){
         pacoteRepository.delete(pacote);
     }
-    public void update(Pacote pacote){
-        pacoteRepository.delete(findById(pacote.getId()));
-        pacoteRepository.save(pacote);
-    }
+
 }

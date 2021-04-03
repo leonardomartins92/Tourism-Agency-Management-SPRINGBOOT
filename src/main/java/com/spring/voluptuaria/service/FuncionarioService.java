@@ -3,9 +3,12 @@ package com.spring.voluptuaria.service;
 import com.spring.voluptuaria.model.Funcionario;
 import com.spring.voluptuaria.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class FuncionarioService {
 
@@ -26,8 +29,7 @@ public class FuncionarioService {
     public void delete(Funcionario funcionario){
         funcionarioRepository.delete(funcionario);
     }
-    public void update(Funcionario funcionario){
-        funcionarioRepository.delete(findById(funcionario.getId()));
-        funcionarioRepository.save(funcionario);
-    }
+
+
+
 }

@@ -57,6 +57,12 @@ public class FuncionarioController {
         }
 
         else{
+            if(funcionario.getIdTipoFuncionario()== 1) {
+                funcionario.setRoles("ROLE_ADMIN");
+            }
+            else{
+                funcionario.setRoles("ROLE_USER");
+            }
             funcionario.setTipoFuncionario(tipoFuncionarioService.findById(funcionario.getIdTipoFuncionario()));
             funcionarioService.save(funcionario);
         }

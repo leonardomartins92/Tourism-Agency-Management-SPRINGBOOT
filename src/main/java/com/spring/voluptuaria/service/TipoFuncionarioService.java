@@ -20,14 +20,4 @@ public class TipoFuncionarioService {
         return tipoFuncionarioRepository.findById(id).get();
     }
 
-    public TipoFuncionario save(TipoFuncionario tipoFuncionario) {
-        return tipoFuncionarioRepository.save(tipoFuncionario);
-    }
-    public void delete(TipoFuncionario tipoFuncionario){
-        tipoFuncionarioRepository.delete(tipoFuncionario);
-    }
-    public void update(TipoFuncionario tipoFuncionario){
-        tipoFuncionarioRepository.delete(findById(tipoFuncionario.getId()));
-        tipoFuncionarioRepository.save(tipoFuncionario);
-    }
 }

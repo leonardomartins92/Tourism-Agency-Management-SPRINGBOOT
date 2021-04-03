@@ -26,8 +26,5 @@ public class DestinoService {
     public void delete(Destino destino){
         destinoRepository.delete(destino);
     }
-    public void update(Destino destino){
-        destinoRepository.delete(findById(destino.getId()));
-        destinoRepository.save(destino);
-    }
+
 }
