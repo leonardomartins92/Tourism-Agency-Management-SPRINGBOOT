@@ -1,23 +1,21 @@
 <!DOCTYPE html>
-<html lang="pt-br">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="pt-br">
+
     <head>
-        <title>Destinos</title>
-        <style>
-            table, th, td {
-                border: 1px solid black;
-                border-collapse: collapse;
-                margin-left: auto;
-                margin-right: auto;
-            }
-        </style>
+
+        <title>Pacote</title>
+
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+
+
 
     </head>
     <body style="text-align: center;background-color: #dadaf6" >
@@ -53,36 +51,42 @@
             </div>
         </div>
     </div>
-    <script src="./Scripts/main.js"></script>
 
-    <div class="container">
-        <table class="table table-striped">
-            <thead>  
-                <tr>
-                    <th>Código</th>
-                    <th>Código Pacote</th>
-                    <th>Local</th>
-                    <th colspan="2">Ação</th>
-                </tr>
-            </thead>
-            <tbody>
 
-                    <tr th:each="destino:${destinos}">
-                        <td th:text = "${destino.id}" />
-                        <td th:text = "${destino.pacote.id}" />
-                        <td th:text = "${destino.local}" />
-                        <td><a th:href="@{manterDestino(operacao='Editar', cod=${destino.id})}" class="btn btn-primary btn-sm">Editar</a></td>
-                        <td><a th:href="@{manterDestino(operacao='Excluir', cod=${destino.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
-                    </tr>
+        <h2><span th:text="${operacao}"/> Pacote</h2>
 
-            </tbody> 
-        </table>
-
-        <div class="col-md-2 ">
-            <div class="list-group">
-                <a th:href="@{manterDestino(operacao='Adicionar')}" class="btn btn-success">Adicionar</a>
-            </div>
+    <form  action="#" th:action="@{manterPacote(operacao=${operacao})}" method="post" th:object="${pacote}">   <div class="row g-3 justify-content-md-center">
+        
+        <div class="col-md-1">
+            <label for="id" class="form-label">Código</label>
+            <input  type="text" class="form-control" id="id" name="id" placeholder=""  th:attr="value = ${pacote?.id}" readonly>
         </div>
-    </div>
+             
+        <div class="col-md-4">
+            <label for="inputCliente" class="form-label">Cliente</label>
+            <select  id="inputCliente" class="form-select" name="idCliente">
+                    <option th:each="cliente:${clientes}"  th:if="${pacote?.cliente?.id == cliente?.id}"  selected> <span th:text="${cliente?.id}"/> </option>
+                    <option th:each="cliente:${clientes}" th:unless="${pacote?.cliente?.id == cliente?.id}" > <span th:text="${cliente?.id}"/> </option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label for="idFuncionario" class="form-label">Funcionários</label>
+            <select class="form-select" name="idFuncionario" id="idFuncionario">
+                <option th:each="funcionario:${funcionarios}" th:if="${pacote?.cliente?.id == funcionario?.id}"  selected> <span th:text="${funcionario?.id}"/> </option>
+                <option th:each="funcionario:${funcionarios}" th:unless="${pacote?.cliente?.id == funcionario?.id}" > <span th:text="${funcionario?.id}"/> </option>
+            </select>
+        </div>
+        </div><br>        
+        <div class="col-4">
+            <button type="submit" class="btn btn-primary" id="botaoSubmit">Confirmar</button>
+        </div>      
+
+    </form>
+
+
+    <script type="text/javascript" th:src="@{/scripts/ViaCep.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/main.js}"></script>
+
 </body>
-</html>
+</html>       

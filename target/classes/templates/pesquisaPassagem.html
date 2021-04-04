@@ -5,7 +5,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     <head>
-        <title>Destinos</title>
+        <title>Passagens</title>
         <style>
             table, th, td {
                 border: 1px solid black;
@@ -43,7 +43,6 @@
         </div>
     </nav>
 
-
     <div class="container">
         <div class="row align-items-start">
             <div class="col">
@@ -53,36 +52,36 @@
             </div>
         </div>
     </div>
-    <script src="./Scripts/main.js"></script>
 
     <div class="container">
-        <table class="table table-striped">
-            <thead>  
+  
+  <table class="table table-striped">
+            <thead>
                 <tr>
                     <th>Código</th>
-                    <th>Código Pacote</th>
-                    <th>Local</th>
+                    <th>Pacote</th>
+                    <th>Origem</th>
                     <th colspan="2">Ação</th>
                 </tr>
             </thead>
             <tbody>
 
-                    <tr th:each="destino:${destinos}">
-                        <td th:text = "${destino.id}" />
-                        <td th:text = "${destino.pacote.id}" />
-                        <td th:text = "${destino.local}" />
-                        <td><a th:href="@{manterDestino(operacao='Editar', cod=${destino.id})}" class="btn btn-primary btn-sm">Editar</a></td>
-                        <td><a th:href="@{manterDestino(operacao='Excluir', cod=${destino.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
+                    <tr th:each="passagem:${passagens}">
+                        <td th:text="${passagem.id}"/>
+                        <td th:text="${passagem.pacote.id}"/>
+                        <td th:text="${passagem.origem}"/>
+                        <td><a th:href="@{manterPassagem(operacao='Editar', cod=${passagem.id})}" class="btn btn-primary btn-sm">Editar</a></td>
+                        <td><a th:href="@{manterPassagem(operacao='Excluir', cod=${passagem.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
                     </tr>
 
-            </tbody> 
+            </tbody>
         </table>
 
         <div class="col-md-2 ">
             <div class="list-group">
-                <a th:href="@{manterDestino(operacao='Adicionar')}" class="btn btn-success">Adicionar</a>
+                <a th:href="@{manterPassagem(operacao='Adicionar')}" class="btn btn-success">Adicionar</a>
             </div>
         </div>
     </div>
-</body>
+    </body>
 </html>

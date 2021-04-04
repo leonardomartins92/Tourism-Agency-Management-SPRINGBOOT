@@ -36,12 +36,16 @@ public class Destino {
     @JoinColumn(nullable = false)
     private Empresa empresa;
 
-    public Destino(Long id, LocalDate inicio, LocalDate fim, Pacote pacote, Empresa empresa) {
+    @NotNull
+    private String local;
+
+    public Destino(Long id, String local, LocalDate inicio, LocalDate fim, Pacote pacote, Empresa empresa) {
         this.id = id;
         this.inicio = inicio;
         this.fim = fim;
         this.pacote = pacote;
         this.empresa = empresa;
+        this.local = local;
     }
 
 

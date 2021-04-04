@@ -5,7 +5,8 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     <head>
-        <title>Destinos</title>
+
+        <title>Empresas</title>
         <style>
             table, th, td {
                 border: 1px solid black;
@@ -53,34 +54,34 @@
             </div>
         </div>
     </div>
-    <script src="./Scripts/main.js"></script>
 
     <div class="container">
-        <table class="table table-striped">
-            <thead>  
-                <tr>
-                    <th>Código</th>
-                    <th>Código Pacote</th>
-                    <th>Local</th>
-                    <th colspan="2">Ação</th>
+    <table class="table table-striped">
+
+
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Tipo</th>
+                <th colspan="2">Ação</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+                <tr th:each="empresa:${empresas}">
+                    <td th:text="${empresa.nome}"/>
+                    <td th:text="${empresa.tipoEmpresa.getTipo()}"/>
+                    <td><a th:href="@{manterEmpresa(operacao='Editar', cod=${empresa.id})}" class="btn btn-primary btn-sm">Editar</a></td>
+                    <td><a th:href="@{manterEmpresa(operacao='Excluir', cod=${empresa.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
                 </tr>
-            </thead>
-            <tbody>
 
-                    <tr th:each="destino:${destinos}">
-                        <td th:text = "${destino.id}" />
-                        <td th:text = "${destino.pacote.id}" />
-                        <td th:text = "${destino.local}" />
-                        <td><a th:href="@{manterDestino(operacao='Editar', cod=${destino.id})}" class="btn btn-primary btn-sm">Editar</a></td>
-                        <td><a th:href="@{manterDestino(operacao='Excluir', cod=${destino.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
-                    </tr>
+        </tbody>
 
-            </tbody> 
-        </table>
-
+    </table>
         <div class="col-md-2 ">
             <div class="list-group">
-                <a th:href="@{manterDestino(operacao='Adicionar')}" class="btn btn-success">Adicionar</a>
+                <a th:href="@{manterEmpresa(operacao='Adicionar')}" class="btn btn-success">Adicionar</a>
             </div>
         </div>
     </div>
