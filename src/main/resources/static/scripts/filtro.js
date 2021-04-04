@@ -1,7 +1,13 @@
 
+var classe = "id";
 
-function filtro(classe, valor){
-    console.log(valor)
+function getClasse(cls){
+    classe = cls;
+}
+
+
+function filtro(valor){
+
      trs = document.getElementsByClassName("filtro");
 
     for( i =0; i<trs.length; i++) {

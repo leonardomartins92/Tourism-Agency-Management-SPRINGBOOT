@@ -52,15 +52,24 @@
             </thead>
 
             <tbody>
-                <tr>
-                    <td><input type="text" class="form-control" id="id" onchange="filtro(this.id, this.value)"></td>
-                    <td><input type="text" class="form-control" id="nome" onchange="filtro(this.id, this.value)"></td>
-                    <td><input type="text" class="form-control" id="cpf" onchange="filtro(this.id, this.value)"></td>
-                    <td colspan="2"> <span id="filtrado"></span></td>
 
-                </tr>
+            <tr>
+                <td>
+                    <select  class="form-select"  onchange="getClasse(this.value)">
+                        <option value="id">Código</option>
+                        <option value="name">Nome</option>
+                        <option value="cpf">CPF</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" class="form-control" onchange="filtro(this.value)">
 
-                <tr class="filtro" th:each = "cliente: ${clientes}" >
+                </td>
+                <td colspan="3"></td>
+
+            </tr>
+
+            <tr class="filtro" th:each = "cliente: ${clientes}" >
                     <td class="id" th:attr="value = ${cliente.id}" th:text = "${cliente.id}" />
                     <td class="nome" th:attr="value = ${cliente.nome}" th:text = "${cliente.nome}" />
                     <td class="cpf" th:attr="value = ${cliente.cpf}" th:text = "${cliente.cpf}" />
