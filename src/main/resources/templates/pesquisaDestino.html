@@ -53,7 +53,8 @@
             </div>
         </div>
     </div>
-    <script src="./Scripts/main.js"></script>
+    <script type="text/javascript" th:src="@{/scripts/main.js}"></script>
+    <script type="text/javascript" th:src="@{/scripts/filtro.js}"></script>
 
     <div class="container">
         <table class="table table-striped">
@@ -66,11 +67,25 @@
                 </tr>
             </thead>
             <tbody>
+            <tr>
+                <td>
+                    <select  class="form-select"  onchange="getClasse(this.value)">
+                        <option value="id">Código</option>
+                        <option value="idpacote">Código Pacote</option>
+                        <option value="local">Local</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" class="form-control" id="filtrar" onchange="filtro(this.value)">
 
-                    <tr th:each="destino:${destinos}">
-                        <td th:text = "${destino.id}" />
-                        <td th:text = "${destino.pacote.id}" />
-                        <td th:text = "${destino.local}" />
+                </td>
+                <td colspan="3"></td>
+            </tr>
+
+                    <tr class="filtro" th:each="destino:${destinos}">
+                        <td class="id" th:attr="value = ${destino.id}" th:text = "${destino.id}" />
+                        <td class="idpacote" th:attr="value = ${destino.pacote.id}" th:text = "${destino.pacote.id}" />
+                        <td class="local" th:attr="value = ${destino.local}" th:text = "${destino.local}" />
                         <td><a th:href="@{manterDestino(operacao='Editar', cod=${destino.id})}" class="btn btn-primary btn-sm">Editar</a></td>
                         <td><a th:href="@{manterDestino(operacao='Excluir', cod=${destino.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
                     </tr>

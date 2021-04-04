@@ -3,11 +3,13 @@ var classe = "id";
 
 function getClasse(cls){
     classe = cls;
+    document.getElementById("filtrar").value = '';
+    filtro(null);
 }
 
-
 function filtro(valor){
-
+    console.log(classe);
+    console.log(valor);
      trs = document.getElementsByClassName("filtro");
 
     for( i =0; i<trs.length; i++) {
