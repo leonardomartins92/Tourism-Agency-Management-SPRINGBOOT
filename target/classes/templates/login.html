@@ -8,27 +8,58 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+        <!-- Fontes -->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&family=Orienta&display=swap" rel="stylesheet">
+
+        <style>
+            .img{
+            padding: 40px;
+            width: 100%;
+            height: 500px;
+             }
+            .texto{
+                font-family: 'Courier Prime', monospace;
+                font-size: 20px;
+            }
+            .titulo{
+                font-family: 'Courier Prime', monospace;
+                font-size: 30px;
+            }
+        </style>
+
 
         <title>Login</title>
 
+
     </head>
-    <body>
+    <body style="background-color: #dadaf6">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
+        <div class="container h-100">
+            <div class="row align-items-center">
 
-        <div class="align-items-start d-flex justify-content-center form-check" style="text-align: center">   
-            <form th:action="@{/login}"  method="post" >
-             <h1>Login</h1> <br>
+                <div class="col" style="background-color: #babad7; padding-bottom: 10px">
+                    <h2 class="titulo">Login</h2>
+                    <form th:action="@{/login}"  method="post" >
+                        <label for="email" class="texto" >CPF</label>
+                        <input type="text" class="form-control" name="username" style="width:200px"  id="email" aria-describedby="emailHelp">
+                        <br>
+                        <label for="password" class="texto">Senha</label><br>
+                        <input type="password" class="form-control" name="password"  style="width:200px "  id="password" >
+                        <div th:if="${param.error}"><p>Senha ou usuário inválido</p> </div>
+                        <div th:if="${param.logout}"><p>Desconectado</p> </div>
+                        <br><button type="submit" class="btn btn-primary">Entrar</button>
+                    </form>
+                </div>
 
-             <label for="email" class="form-label" >CPF</label>
-             <input type="text" class="form-control" name="username" style="width:400px"  id="email" aria-describedby="emailHelp">
-             <br><label for="password" class="form-label">Senha</label>
-             <br><input type="password" class="form-control" name="password"  style="width:400px "  id="password" >
-                <div th:if="${param.error}"><p>Senha ou usuário inválido</p> </div>
-                <div th:if="${param.logout}"><p>Desconectado</p> </div>
-             <br><button type="submit" class="btn btn-primary">Entrar</button>                          
-            </form>    
-               
+                <div class="col-9">
+                    <img class="img"  th:src="@{/images/melissa-AWh9C-QjhE4-unsplash.jpg}" alt="china">
+               </div>
+
+            </div>
+
         </div>
     </body>
 

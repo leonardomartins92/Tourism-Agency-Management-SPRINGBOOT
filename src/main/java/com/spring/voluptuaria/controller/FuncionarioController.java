@@ -35,9 +35,6 @@ public class FuncionarioController {
                                 @RequestParam(required = false) Long cod){
         ModelAndView mv;
 
-        log.info("operacao:"+operacao);
-        log.info("cod:"+cod);
-
             mv = new ModelAndView("manterFuncionario");
             mv.addObject("operacao", operacao);
             mv.addObject("tipos", tipoFuncionarioService.findAll());
@@ -49,7 +46,7 @@ public class FuncionarioController {
         return mv;
     }
     @RequestMapping(value = "/manterFuncionario", method = RequestMethod.POST)
-    public ModelAndView formulario(@RequestParam String operacao, Funcionario funcionario) {
+    public ModelAndView formulario(@RequestParam String operacao, Funcionario funcionario, String novaSenha) {
         ModelAndView mv;
 
         if(operacao.equals("Excluir")){
@@ -63,7 +60,22 @@ public class FuncionarioController {
             else{
                 funcionario.setRoles("ROLE_USER");
             }
-            funcionario.setTipoFuncionario(tipoFuncionarioService.findById(funcionario.getIdTipoFuncionario()));
+           funcionario.setTipoFuncionario(tipoFuncionarioService.findById(funcionario.getIdTipoFuncionario()));
+
+            if(operacao.equals("Editar")){
+
+                if( funcionario.getSenha() == "" || funcionario.getSenha() == null) {
+                    funcionario.setSenha(funcionarioService.findById(funcionario.getId()).getSenha());
+                }
+                else{
+                    if(funcionario.getSenha().equals(funcionarioService.findById(funcionario.getId()).getSenha())) {
+                    funcionario.setSenha(novaSenha);
+
+                   }
+                }
+            }
+
+
             funcionarioService.save(funcionario);
         }
 
