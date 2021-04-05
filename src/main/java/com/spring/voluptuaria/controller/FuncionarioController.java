@@ -70,16 +70,16 @@ public class FuncionarioController {
                 else{
                     if(funcionario.getSenha().equals(funcionarioService.findById(funcionario.getId()).getSenha())) {
                     funcionario.setSenha(novaSenha);
-
                    }
+                    else{
+                        mv = getView(operacao, funcionario.getId());
+                        mv.addObject("erro",1);
+                        return mv;
+                    }
                 }
             }
-
-
             funcionarioService.save(funcionario);
         }
-
         return  preparaPesquisa();
     }
-
 }

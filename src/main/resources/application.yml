@@ -1,6 +1,9 @@
 server:
   error:
     include-stacktrace: on_param
+    whitelabel:
+      enabled: false
+
 
 spring:
   datasource:
@@ -10,3 +13,4 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+

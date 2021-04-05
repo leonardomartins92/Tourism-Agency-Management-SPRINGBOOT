@@ -53,8 +53,8 @@
 
         <h2>Bem-vindo, <span th:text="${nome}"></span> </h2>
         <br>
-        <h4 th:if="${pacotes == 1}">Você vendeu <span th:text="${pacotes}"></span> pacote</h4>
-        <h4 th:unless="${pacotes == 1}">Você vendeu <span th:text="${pacotes}"></span> pacotes</h4>
+        <h4 th:if="${pacotes == 1}">Você já vendeu <span th:text="${pacotes}"></span> pacote</h4>
+        <h4 th:unless="${pacotes == 1}">Você já vendeu <span th:text="${pacotes}"></span> pacotes</h4>
 
     </div>
 </body>
