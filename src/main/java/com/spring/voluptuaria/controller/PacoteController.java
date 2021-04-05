@@ -1,10 +1,9 @@
 package com.spring.voluptuaria.controller;
 
+import com.spring.voluptuaria.model.Empresa;
 import com.spring.voluptuaria.model.Pacote;
-import com.spring.voluptuaria.model.Pacote;
-import com.spring.voluptuaria.service.ClienteService;
-import com.spring.voluptuaria.service.PacoteService;
-import com.spring.voluptuaria.service.FuncionarioService;
+import com.spring.voluptuaria.model.Destino;
+import com.spring.voluptuaria.service.*;
 import com.spring.voluptuaria.service.PacoteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,6 +25,10 @@ public class PacoteController {
     FuncionarioService funcionarioService;
     @Autowired
     ClienteService clienteService;
+    @Autowired
+    DestinoService destinoService;
+    @Autowired
+    EmpresaService empresaService;
 
     @RequestMapping(value = "/pesquisaPacote", method = RequestMethod.GET)
     public ModelAndView preparaPesquisa(){
@@ -39,16 +43,32 @@ public class PacoteController {
                                 @RequestParam(required = false) Long cod){
         ModelAndView mv;
 
-        log.info("operacao:"+operacao);
-        log.info("cod:"+cod);
 
             mv = new ModelAndView("manterPacote");
             mv.addObject("operacao", operacao);
             mv.addObject("funcionarios",funcionarioService.findAll());
             mv.addObject("clientes", clienteService.findAll());
 
+
+
+            List<Empresa> empresas = new ArrayList<>();
+
+        for(Empresa empresa:empresaService.findAll()){
+            if(empresa.getTipoEmpresa().getTipo().equals("ACOMODAÇÃO")){
+                empresas.add(empresa);
+            }
+        }
+             mv.addObject("empresas", empresas);
+
             if (!operacao.equals("Adicionar")) {
                 mv.addObject("pacote", pacoteService.findById(cod));
+                List<Destino> destinos = new ArrayList<>();
+                for(Destino destino: destinoService.findAll()){
+                    if(destino.getIdPacote() == cod){
+                        destinos.add(destino);
+                    }
+                }
+                mv.addObject("destinos", destinos);
             }
         return mv;
     }

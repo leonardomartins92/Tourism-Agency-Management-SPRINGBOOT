@@ -5,88 +5,114 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <html lang="pt-br">
 
-    <head>
+<head>
 
-        <title>Pacote</title>
-
-
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <title>Pacote</title>
 
 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
 
-    </head>
-    <body style="text-align: center;background-color: #dadaf6" >
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
 
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="pesquisaPacote">Pacotes</a>
-                    <a class="nav-link" href="pesquisaPassagem">Passagens</a>
-                    <a class="nav-link" href="pesquisaCliente">Clientes</a>
-                    <a class="nav-link" href="pesquisaFuncionario">Funcionários</a>
-                    <a class="nav-link" href="pesquisaEmpresa">Empresas</a>
-                    <a class="nav-link" href="pesquisaDestino">Destinos</a>
+</head>
+<body style="text-align: center;background-color: #dadaf6" >
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
-                </div>
-            </div>
-            <div class="d-flex justify-content-end">
-                <a class="nav-link" href="logout">Sair</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="pesquisaPacote">Pacotes</a>
+                <a class="nav-link" href="pesquisaPassagem">Passagens</a>
+                <a class="nav-link" href="pesquisaCliente">Clientes</a>
+                <a class="nav-link" href="pesquisaFuncionario">Funcionários</a>
+                <a class="nav-link" href="pesquisaEmpresa">Empresas</a>
+                <a class="nav-link" href="pesquisaDestino">Destinos</a>
+
             </div>
         </div>
-    </nav>
-
-
-    <div class="container">
-        <div class="row align-items-start">
-            <div class="col">
-
-            </div>
-            <div class="col">
-            </div>
+        <div class="d-flex justify-content-end">
+            <a class="nav-link" href="logout">Sair</a>
         </div>
     </div>
+</nav>
 
 
+<div class="container">
+    <div class="row align-items-start">
         <h2><span th:text="${operacao}"/> Pacote</h2>
+        <div class="col-6">
 
-    <form  action="#" th:action="@{manterPacote(operacao=${operacao})}" method="post" th:object="${pacote}">   <div class="row g-3 justify-content-md-center">
-        
-        <div class="col-md-1">
-            <label for="id" class="form-label">Código</label>
-            <input  type="text" class="form-control" id="id" name="id" placeholder=""  th:attr="value = ${pacote?.id}" readonly>
+            <form  action="#" th:action="@{manterPacote(operacao=${operacao})}" method="post" th:object="${pacote}">
+                <div class="row g-3 justify-content-md-center">
+
+                    <div class="col-md-2">
+                        <label for="id" class="form-label">Código</label>
+                        <input  type="text" class="form-control" id="id" name="id" placeholder=""  th:attr="value = ${pacote?.id}" readonly>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="inputCliente" class="form-label">Cliente</label>
+                        <select  id="inputCliente" class="form-select" name="idCliente">
+                            <option th:each="cliente:${clientes}"  th:if="${pacote?.cliente?.id == cliente?.id}"  selected> <span th:text="${cliente?.id}"/> </option>
+                            <option th:each="cliente:${clientes}" th:unless="${pacote?.cliente?.id == cliente?.id}" > <span th:text="${cliente?.id}"/> </option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="idFuncionario" class="form-label">Funcionários</label>
+                        <select class="form-select" name="idFuncionario" id="idFuncionario">
+                            <option th:each="funcionario:${funcionarios}" th:if="${pacote?.cliente?.id == funcionario?.id}"  selected> <span th:text="${funcionario?.id}"/> </option>
+                            <option th:each="funcionario:${funcionarios}" th:unless="${pacote?.cliente?.id == funcionario?.id}" > <span th:text="${funcionario?.id}"/> </option>
+                        </select> <br>
+                    </div>
+                </div>
+                <div class="col-4 ">
+                    <button type="submit" class="btn btn-primary" id="botaoSubmit">Confirmar</button>
+                </div>
+            </form>
         </div>
-             
-        <div class="col-md-4">
-            <label for="inputCliente" class="form-label">Cliente</label>
-            <select  id="inputCliente" class="form-select" name="idCliente">
-                    <option th:each="cliente:${clientes}"  th:if="${pacote?.cliente?.id == cliente?.id}"  selected> <span th:text="${cliente?.id}"/> </option>
-                    <option th:each="cliente:${clientes}" th:unless="${pacote?.cliente?.id == cliente?.id}" > <span th:text="${cliente?.id}"/> </option>
-            </select>
+
+        <div class="col-6">
+            <div class="container">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Local</th>
+                        <th>Empresa</th>
+                        <th colspan="2">Ação</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="destino:${destinos}">
+                        <td th:text = "${destino.id}" />
+                        <td th:text = "${destino.local}" />
+                        <td th:text = "${destino.empresa.nome}" />
+                        <td><a th:href="@{manterDestino(operacao='Editar', cod=${destino.id})}" class="btn btn-primary btn-sm">Editar</a></td>
+                        <td><a th:href="@{manterDestino(operacao='Excluir', cod=${destino.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <a th:href="@{manterDestino(operacao='Adicionar')}"  class="btn btn-success btn-sm">Adicionar Destino</a>
         </div>
+        </form>
+    </div>
+    <br><br><br>
 
-        <div class="col-md-4">
-            <label for="idFuncionario" class="form-label">Funcionários</label>
-            <select class="form-select" name="idFuncionario" id="idFuncionario">
-                <option th:each="funcionario:${funcionarios}" th:if="${pacote?.cliente?.id == funcionario?.id}"  selected> <span th:text="${funcionario?.id}"/> </option>
-                <option th:each="funcionario:${funcionarios}" th:unless="${pacote?.cliente?.id == funcionario?.id}" > <span th:text="${funcionario?.id}"/> </option>
-            </select>
-        </div>
-        </div><br>        
-        <div class="col-4">
-            <button type="submit" class="btn btn-primary" id="botaoSubmit">Confirmar</button>
-        </div>      
-
-    </form>
+</div>
 
 
-    <script type="text/javascript" th:src="@{/scripts/ViaCep.js}"></script>
-    <script type="text/javascript" th:src="@{/scripts/main.js}"></script>
+<script type="text/javascript" th:src="@{/scripts/ViaCep.js}"></script>
+<script type="text/javascript" th:src="@{/scripts/main.js}"></script>
 
 </body>
-</html>       
+</html>
