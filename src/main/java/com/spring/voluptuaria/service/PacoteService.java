@@ -26,5 +26,7 @@ public class PacoteService {
     public void delete(Pacote pacote){
         pacoteRepository.delete(pacote);
     }
-
+    public List<Pacote> findPacotesByFuncionario_Id(Long id){
+        return pacoteRepository.findPacotesByFuncionario_Id(id);
+    }
 }

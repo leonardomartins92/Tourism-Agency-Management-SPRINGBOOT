@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <html lang="pt-br">
     <head>
 
@@ -21,7 +25,7 @@
                 <div class="navbar-nav">
                     <a class="nav-link active" aria-current="page" href="pesquisaPacote">Pacotes</a>
                     <a class="nav-link" href="pesquisaPassagem">Passagens</a>
-                    <a class="nav-link" href="pesquisaClienter">Clientes</a>
+                    <a class="nav-link" href="pesquisaCliente">Clientes</a>
                     <a class="nav-link" href="pesquisaFuncionario">Funcionários</a>
                     <a class="nav-link" href="pesquisaEmpresa">Empresas</a>
                     <a class="nav-link" href="pesquisaDestino">Destinos</a>
@@ -47,13 +51,10 @@
 
     <div class="header-col">
 
-        <h2>Inicial do Gerente</h2>
-        <a href="pesquisaCliente">Clientes</a><br>
-        <a href="pesquisaEmpresa">Empresas</a><br>
-        <a href="pesquisaFuncionario">Funcionários</a><br>
-        <a href="pesquisaPassagem">Passagem</a><br>
-        <a href="pesquisaPacote">Pacote</a><br>
-        <a href="pesquisaDestino">Destino</a><br>
+        <h2>Bem-vindo, <span th:text="${nome}"></span> </h2>
+        <br>
+        <h4 th:if="${pacotes == 1}">Você vendeu <span th:text="${pacotes}"></span> pacote</h4>
+        <h4 th:unless="${pacotes == 1}">Você vendeu <span th:text="${pacotes}"></span> pacotes</h4>
 
     </div>
 </body>
