@@ -3,6 +3,7 @@ package com.spring.voluptuaria.controller;
 import com.spring.voluptuaria.model.Empresa;
 import com.spring.voluptuaria.model.Pacote;
 import com.spring.voluptuaria.model.Destino;
+import com.spring.voluptuaria.model.Passagem;
 import com.spring.voluptuaria.service.*;
 import com.spring.voluptuaria.service.PacoteService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,8 @@ public class PacoteController {
     DestinoService destinoService;
     @Autowired
     EmpresaService empresaService;
+    @Autowired
+    PassagemService passagemService;
 
     @RequestMapping(value = "/pesquisaPacote", method = RequestMethod.GET)
     public ModelAndView preparaPesquisa(){
@@ -62,6 +65,7 @@ public class PacoteController {
 
             if (!operacao.equals("Adicionar")) {
                 mv.addObject("pacote", pacoteService.findById(cod));
+
                 List<Destino> destinos = new ArrayList<>();
                 for(Destino destino: destinoService.findAll()){
                     if(destino.getIdPacote() == cod){
@@ -69,6 +73,14 @@ public class PacoteController {
                     }
                 }
                 mv.addObject("destinos", destinos);
+
+                List<Passagem> passagens = new ArrayList<>();
+                for(Passagem passagem: passagemService.findAll()){
+                    if(passagem.getIdPacote() == cod){
+                        passagens.add(passagem);
+                    }
+                }
+                mv.addObject("passagens", passagens);
             }
         return mv;
     }

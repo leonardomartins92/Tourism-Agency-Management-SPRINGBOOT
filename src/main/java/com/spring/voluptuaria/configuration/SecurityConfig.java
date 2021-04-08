@@ -26,11 +26,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] EVERYBODY = {
             "/", "/homeFuncionario", "/pesquisaCliente", "/pesquisaDestino",
             "/pesquisaEmpresa", "/pesquisaFuncionario", "/pesquisaPacote", "/pesquisaPassagem",
-            "/manterCliente", "/manterPacote", "/manterPassagem"
+            "/manterCliente", "/manterPacote", "/manterPassagem", "/manterDestino"
     };
 
     private static final String[] ADMIN = {
-            "/manterEmpresa", "/manterDestino", "/manterFuncionario"
+            "/manterEmpresa", "/manterFuncionario"
     };
 
     @Override

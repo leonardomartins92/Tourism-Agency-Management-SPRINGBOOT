@@ -31,7 +31,7 @@ public class LoginController {
         return mv;
     }
 
-    @RequestMapping(value = {"/", "", "homeFuncionario"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/","homeFuncionario"}, method = RequestMethod.GET)
     public ModelAndView preparaOperacao(){
         ModelAndView mv = new ModelAndView("homeFuncionario");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
