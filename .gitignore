@@ -80,5 +80,7 @@ nb-configuration.xml
 ## OS X
 ##############################
 .DS_Store
-
+########
+FILE:
+application.yml
 
