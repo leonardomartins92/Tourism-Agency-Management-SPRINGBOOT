@@ -9,9 +9,7 @@ import com.spring.voluptuaria.service.PacoteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -33,59 +31,32 @@ public class PacoteController {
     @Autowired
     PassagemService passagemService;
 
-    @RequestMapping(value = "/pesquisaPacote", method = RequestMethod.GET)
+    @GetMapping(value = "/pesquisaPacote")
     public ModelAndView preparaPesquisa(){
         ModelAndView mv = new ModelAndView("pesquisaPacote");
-        List<Pacote> pacotes = pacoteService.findAll();
-        mv.addObject("pacotes", pacotes);
+        mv.addObject("pacotes", pacoteService.findAll());
         return mv;
     }
 
-    @RequestMapping(value = "/manterPacote", method = RequestMethod.GET)
+    @GetMapping(value = "/manterPacote")
     public ModelAndView getView(@RequestParam String operacao,
                                 @RequestParam(required = false) Long cod){
-        ModelAndView mv;
-
-
+            ModelAndView mv;
             mv = new ModelAndView("manterPacote");
             mv.addObject("operacao", operacao);
             mv.addObject("funcionarios",funcionarioService.findAll());
             mv.addObject("clientes", clienteService.findAll());
-
-
-
-            List<Empresa> empresas = new ArrayList<>();
-
-        for(Empresa empresa:empresaService.findAll()){
-            if(empresa.getTipoEmpresa().getTipo().equals("ACOMODAÇÃO")){
-                empresas.add(empresa);
-            }
-        }
-             mv.addObject("empresas", empresas);
+            mv.addObject("empresas", empresaService.findAllByTipo("ACOMODAÇÃO"));
 
             if (!operacao.equals("Adicionar")) {
                 mv.addObject("pacote", pacoteService.findById(cod));
-
-                List<Destino> destinos = new ArrayList<>();
-                for(Destino destino: destinoService.findAll()){
-                    if(destino.getIdPacote() == cod){
-                        destinos.add(destino);
-                    }
-                }
-                mv.addObject("destinos", destinos);
-
-                List<Passagem> passagens = new ArrayList<>();
-                for(Passagem passagem: passagemService.findAll()){
-                    if(passagem.getIdPacote() == cod){
-                        passagens.add(passagem);
-                    }
-                }
-                mv.addObject("passagens", passagens);
+                mv.addObject("destinos", destinoService.findAllWithId(cod));
+                mv.addObject("passagens", passagemService.findAllWithId(cod));
             }
         return mv;
     }
 
-    @RequestMapping(value = "/manterPacote", method = RequestMethod.POST)
+    @PostMapping(value = "/manterPacote")
     public ModelAndView formulario(@RequestParam String operacao, Pacote pacote) {
 
        if(operacao.equals("Excluir")){

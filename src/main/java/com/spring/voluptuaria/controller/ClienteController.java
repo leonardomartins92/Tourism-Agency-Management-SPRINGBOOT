@@ -5,9 +5,7 @@ import com.spring.voluptuaria.service.ClienteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
@@ -16,28 +14,27 @@ public class ClienteController {
     @Autowired
     ClienteService clienteService;
 
-    @RequestMapping(value = "/pesquisaCliente", method = RequestMethod.GET)
+    @GetMapping(value = "/pesquisaCliente")
     public ModelAndView preparaPesquisa(){
         ModelAndView mv = new ModelAndView("pesquisaCliente");
         mv.addObject("clientes", clienteService.findAll());
         return mv;
     }
 
-    @RequestMapping(value = "/manterCliente", method = RequestMethod.GET)
+    @GetMapping(value = "/manterCliente")
     public ModelAndView preparaManter(@RequestParam String operacao,
                         @RequestParam(required = false) Long cod){
-        ModelAndView mv;
-
+            ModelAndView mv;
             mv = new ModelAndView("manterCliente");
             mv.addObject("operacao", operacao);
 
             if (!operacao.equals("Adicionar")) {
                  mv.addObject("cliente", clienteService.findById(cod));
             }
-        return mv;
+             return mv;
     }
 
-    @RequestMapping(value = "/manterCliente", method = RequestMethod.POST)
+    @PostMapping(value = "/manterCliente")
     public ModelAndView formulario(@RequestParam String operacao, Cliente cliente) {
 
       if(operacao.equals("Excluir")){
@@ -46,7 +43,6 @@ public class ClienteController {
       else{
           clienteService.save(cliente);
       }
-
          return preparaPesquisa();
     }
 

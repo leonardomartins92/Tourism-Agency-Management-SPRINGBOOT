@@ -8,9 +8,7 @@ import com.spring.voluptuaria.service.TipoEmpresaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -24,16 +22,14 @@ public class EmpresaController {
     @Autowired
     TipoEmpresaService tipoEmpresaService;
 
-    @RequestMapping(value = "/pesquisaEmpresa", method = RequestMethod.GET)
+    @GetMapping(value = "/pesquisaEmpresa")
     public ModelAndView preparaPesquisa(){
         ModelAndView mv = new ModelAndView("pesquisaEmpresa");
-
         mv.addObject("empresas", empresaService.findAll());
-
         return mv;
     }
 
-    @RequestMapping(value = "/manterEmpresa", method = RequestMethod.GET)
+    @GetMapping(value = "/manterEmpresa")
     public ModelAndView preparaManter(@RequestParam String operacao,
                                 @RequestParam(required = false) Long cod){
 
@@ -48,7 +44,7 @@ public class EmpresaController {
 
         return mv;
     }
-    @RequestMapping(value = "/manterEmpresa", method = RequestMethod.POST)
+    @PostMapping(value = "/manterEmpresa")
     public ModelAndView form(@RequestParam String operacao, Empresa empresa) {
 
        if(operacao.equals("Excluir")){

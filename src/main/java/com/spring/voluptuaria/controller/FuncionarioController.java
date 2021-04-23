@@ -7,9 +7,7 @@ import com.spring.voluptuaria.service.TipoFuncionarioService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -22,15 +20,14 @@ public class FuncionarioController {
     @Autowired
     TipoFuncionarioService tipoFuncionarioService;
 
-    @RequestMapping(value = "/pesquisaFuncionario", method = RequestMethod.GET)
+    @GetMapping(value = "/pesquisaFuncionario")
     public ModelAndView preparaPesquisa(){
         ModelAndView mv = new ModelAndView("pesquisaFuncionario");
-        List<Funcionario> funcionarios = funcionarioService.findAll();
-        mv.addObject("funcionarios", funcionarios);
+        mv.addObject("funcionarios", funcionarioService.findAll());
         return mv;
     }
 
-    @RequestMapping(value = "/manterFuncionario", method = RequestMethod.GET)
+    @GetMapping(value = "/manterFuncionario")
     public ModelAndView getView(@RequestParam String operacao,
                                 @RequestParam(required = false) Long cod){
         ModelAndView mv;
@@ -45,7 +42,7 @@ public class FuncionarioController {
 
         return mv;
     }
-    @RequestMapping(value = "/manterFuncionario", method = RequestMethod.POST)
+    @PostMapping(value = "/manterFuncionario")
     public ModelAndView formulario(@RequestParam String operacao, Funcionario funcionario, String novaSenha) {
         ModelAndView mv;
 

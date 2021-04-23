@@ -9,9 +9,7 @@ import com.spring.voluptuaria.service.PassagemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -27,16 +25,14 @@ public class PassagemController {
     @Autowired
     PacoteService pacoteService;
 
-    @RequestMapping(value = "/pesquisaPassagem", method = RequestMethod.GET)
+    @GetMapping(value = "/pesquisaPassagem")
     public ModelAndView preparaPesquisa(){
         ModelAndView mv = new ModelAndView("pesquisaPassagem");
-
         mv.addObject("passagens", passagemService.findAll());
-
         return mv;
     }
 
-    @RequestMapping(value = "/manterPassagem", method = RequestMethod.GET)
+    @GetMapping(value = "/manterPassagem")
     public ModelAndView preparaManter(@RequestParam String operacao,
                                 @RequestParam(required = false) Long cod){
         ModelAndView mv;
@@ -44,15 +40,7 @@ public class PassagemController {
         mv = new ModelAndView("manterPassagem");
         mv.addObject("operacao", operacao);
         mv.addObject("pacotes", pacoteService.findAll());
-        List<Empresa> empresas = new ArrayList<>();
-
-        for(Empresa empresa:empresaService.findAll()){
-            if(empresa.getTipoEmpresa().getTipo().equals("AEREA")){
-                empresas.add(empresa);
-            }
-        }
-
-        mv.addObject("empresas", empresas);
+        mv.addObject("empresas", empresaService.findAllByTipo("AEREA"));
 
         if (!operacao.equals("Adicionar")) {
             mv.addObject("passagem", passagemService.findById(cod));
@@ -61,7 +49,7 @@ public class PassagemController {
         return mv;
     }
 
-    @RequestMapping(value = "/manterPassagem", method = RequestMethod.POST)
+    @PostMapping(value = "/manterPassagem")
     public ModelAndView formulario(@RequestParam String operacao, Passagem passagem) {
 
         if(operacao.equals("Excluir")){

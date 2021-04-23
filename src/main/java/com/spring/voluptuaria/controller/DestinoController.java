@@ -8,9 +8,7 @@ import com.spring.voluptuaria.service.PacoteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -25,15 +23,14 @@ public class DestinoController {
     @Autowired
     EmpresaService empresaService;
 
-    @RequestMapping(value = "/pesquisaDestino", method = RequestMethod.GET)
+    @GetMapping(value = "/pesquisaDestino")
     public ModelAndView preparaPesquisa(){
         ModelAndView mv = new ModelAndView("pesquisaDestino");
-        List<Destino> destinos = destinoService.findAll();
-        mv.addObject("destinos", destinos);
+        mv.addObject("destinos", destinoService.findAll());
         return mv;
     }
 
-    @RequestMapping(value = "/manterDestino", method = RequestMethod.GET)
+    @GetMapping(value = "/manterDestino")
     public ModelAndView getView(@RequestParam String operacao,
                                 @RequestParam(required = false) Long cod){
         ModelAndView mv;
@@ -41,23 +38,16 @@ public class DestinoController {
             mv = new ModelAndView("manterDestino");
             mv.addObject("operacao", operacao);
             mv.addObject("pacotes", pacoteService.findAll());
-
-            List<Empresa> empresas = new ArrayList<>();
-
-            for(Empresa empresa:empresaService.findAll()){
-                if(empresa.getTipoEmpresa().getTipo().equals("ACOMODAÇÃO")){
-                    empresas.add(empresa);
-                }
-            }
-            mv.addObject("empresas", empresas);
+            mv.addObject("empresas", empresaService.findAllByTipo("ACOMODAÇÃO"));
 
             if (!operacao.equals("Adicionar")) {
                 mv.addObject("destino", destinoService.findById(cod));
             }
+
         return mv;
     }
 
-    @RequestMapping(value = "/manterDestino", method = RequestMethod.POST)
+    @PostMapping(value = "/manterDestino")
     public ModelAndView formulario(@RequestParam String operacao, Destino destino) {
 
         if(operacao.equals("Excluir")){
