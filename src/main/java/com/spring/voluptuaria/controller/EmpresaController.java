@@ -2,17 +2,24 @@ package com.spring.voluptuaria.controller;
 
 import com.spring.voluptuaria.model.Empresa;
 import com.spring.voluptuaria.model.Empresa;
+import com.spring.voluptuaria.model.Funcionario;
 import com.spring.voluptuaria.model.TipoEmpresa;
 import com.spring.voluptuaria.service.EmpresaService;
+import com.spring.voluptuaria.service.FuncionarioService;
 import com.spring.voluptuaria.service.TipoEmpresaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Controller
@@ -21,11 +28,16 @@ public class EmpresaController {
     EmpresaService empresaService;
     @Autowired
     TipoEmpresaService tipoEmpresaService;
+    @Autowired
+    FuncionarioService funcionarioService;
 
     @GetMapping(value = "/pesquisaEmpresa")
     public ModelAndView preparaPesquisa(){
         ModelAndView mv = new ModelAndView("pesquisaEmpresa");
         mv.addObject("empresas", empresaService.findAll());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        mv.addObject("tipo",authentication.getAuthorities().contains("ROLE_ADMIN"));
         return mv;
     }
 

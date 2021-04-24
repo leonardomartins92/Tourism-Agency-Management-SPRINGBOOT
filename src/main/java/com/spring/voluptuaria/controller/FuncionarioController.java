@@ -6,11 +6,14 @@ import com.spring.voluptuaria.service.FuncionarioService;
 import com.spring.voluptuaria.service.TipoFuncionarioService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @Slf4j
@@ -24,6 +27,8 @@ public class FuncionarioController {
     public ModelAndView preparaPesquisa(){
         ModelAndView mv = new ModelAndView("pesquisaFuncionario");
         mv.addObject("funcionarios", funcionarioService.findAll());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        mv.addObject("tipo",authentication.getAuthorities().contains("ROLE_ADMIN"));
         return mv;
     }
 

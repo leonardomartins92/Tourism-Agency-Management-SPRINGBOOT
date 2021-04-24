@@ -65,7 +65,7 @@
                 <th>Código</th>
                 <th>Nome</th>
                 <th>Tipo</th>
-                <th colspan="2">Ação</th>
+                <th th:if="${tipo}" colspan="2">Ação</th>
             </tr>
         </thead>
 
@@ -90,14 +90,14 @@
                     <td class="id" th:attr="value = ${empresa.id}" th:text="${empresa.id}"/>
                     <td class="nome" th:attr="value = ${empresa.nome}" th:text="${empresa.nome}"/>
                     <td class="tipo" th:attr="value = ${empresa.tipoEmpresa.getTipo()}" th:text="${empresa.tipoEmpresa.getTipo()}"/>
-                    <td><a th:href="@{manterEmpresa(operacao='Editar', cod=${empresa.id})}" class="btn btn-primary btn-sm">Editar</a></td>
-                    <td><a th:href="@{manterEmpresa(operacao='Excluir', cod=${empresa.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
+                    <td th:if="${tipo}"><a th:href="@{manterEmpresa(operacao='Editar', cod=${empresa.id})}" class="btn btn-primary btn-sm">Editar</a></td>
+                    <td th:if="${tipo}"><a th:href="@{manterEmpresa(operacao='Excluir', cod=${empresa.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
                 </tr>
 
         </tbody>
 
     </table>
-        <div class="col-md-2 ">
+        <div th:if="${tipo}" class="col-md-2 ">
             <div class="list-group">
                 <a th:href="@{manterEmpresa(operacao='Adicionar')}" class="btn btn-success">Adicionar</a>
             </div>
