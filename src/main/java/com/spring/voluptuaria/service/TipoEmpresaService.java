@@ -19,4 +19,7 @@ public class TipoEmpresaService {
         return tipoEmpresaRepository.findById(id).get();
     }
 
+    public void save(TipoEmpresa tipo){
+        tipoEmpresaRepository.save(tipo);
+    }
 }

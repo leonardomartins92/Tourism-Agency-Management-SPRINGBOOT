@@ -2,13 +2,16 @@ package com.spring.voluptuaria.model;
 
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Funcionario {
 
@@ -42,7 +45,7 @@ public class Funcionario {
     private Long idTipoFuncionario;
     private String roles;
 
-    public Funcionario(Long id, String cpf, String nome, String telefone, String email, String logradouro, String numero, String complemento, String uf, String localidade, String cep, String senha, TipoFuncionario tipoFuncionario) {
+    public Funcionario(Long id, String cpf, String nome, String telefone, String email, String logradouro, String numero,  String uf, String localidade, String cep, String senha, TipoFuncionario tipoFuncionario) {
         this.id = id;
         this.cpf = cpf;
         this.nome = nome;

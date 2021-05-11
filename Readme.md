@@ -12,6 +12,6 @@ Criação de um Sistema Gerencial para Agências de Turismo:
 
 ### PRIMEIRAS CONFIGURAÇÕES
 
-Para o primeiro acesso é preciso acessar o banco mysql e cadastrar um funcionário com role "ROLE_ADMIN", para realizar o primeiro acesso ao sistema. 
+Para o primeiro acesso é preciso acessar http://localhost:8080/primeiroAcesso e obter o login
 
 

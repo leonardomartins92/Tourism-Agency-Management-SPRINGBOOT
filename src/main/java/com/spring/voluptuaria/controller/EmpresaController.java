@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,7 +38,8 @@ public class EmpresaController {
         mv.addObject("empresas", empresaService.findAll());
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        mv.addObject("tipo",authentication.getAuthorities().contains("ROLE_ADMIN"));
+        var roles = authentication.getAuthorities().toString().contains("ROLE_ADMIN");
+        mv.addObject("tipo", roles );
         return mv;
     }
 

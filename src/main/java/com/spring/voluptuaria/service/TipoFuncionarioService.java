@@ -20,4 +20,8 @@ public class TipoFuncionarioService {
         return tipoFuncionarioRepository.findById(id).get();
     }
 
+    public void save(TipoFuncionario tipo){
+        tipoFuncionarioRepository.save(tipo);
+    }
+
 }

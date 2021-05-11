@@ -2,8 +2,12 @@ package com.spring.voluptuaria.controller;
 
 import com.spring.voluptuaria.model.Funcionario;
 import com.spring.voluptuaria.model.Funcionario;
+import com.spring.voluptuaria.model.TipoEmpresa;
+import com.spring.voluptuaria.model.TipoFuncionario;
 import com.spring.voluptuaria.service.FuncionarioService;
+import com.spring.voluptuaria.service.TipoEmpresaService;
 import com.spring.voluptuaria.service.TipoFuncionarioService;
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -22,6 +26,8 @@ public class FuncionarioController {
     FuncionarioService funcionarioService;
     @Autowired
     TipoFuncionarioService tipoFuncionarioService;
+    @Autowired
+    TipoEmpresaService tipoEmpresaService;
 
     @GetMapping(value = "/pesquisaFuncionario")
     public ModelAndView preparaPesquisa(){
@@ -83,5 +89,27 @@ public class FuncionarioController {
             funcionarioService.save(funcionario);
         }
         return  preparaPesquisa();
+    }
+
+    @GetMapping("/primeiroAcesso")
+    public ModelAndView configurar(){
+        ModelAndView mv = new ModelAndView("primeiroAcesso");
+
+        TipoFuncionario gerente = new TipoFuncionario(1L,"GERENTE");
+        TipoFuncionario vendedor = new TipoFuncionario(2L, "VENDEDOR");
+        TipoEmpresa aerea = new TipoEmpresa(1L, "AEREA");
+        TipoEmpresa acomodacao = new TipoEmpresa(2L, "ACOMODACAO");
+        Funcionario funcionario = new Funcionario(1L,"100","ADMIN", "99978", "adm@email",
+                "Rua da ADM", "1", "MG", "Juiz de Fora",
+                "36090000","123", gerente );
+        funcionario.setRoles("ROLE_ADMIN");
+        funcionario.setIdTipoFuncionario(1L);
+        tipoFuncionarioService.save(gerente);
+        tipoFuncionarioService.save(vendedor);
+        funcionarioService.save(funcionario);
+        tipoEmpresaService.save(acomodacao);
+        tipoEmpresaService.save(aerea);
+        return mv;
+
     }
 }
