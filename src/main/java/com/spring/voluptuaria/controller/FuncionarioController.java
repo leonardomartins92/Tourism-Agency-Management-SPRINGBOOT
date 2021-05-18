@@ -34,7 +34,7 @@ public class FuncionarioController {
         ModelAndView mv = new ModelAndView("pesquisaFuncionario");
         mv.addObject("funcionarios", funcionarioService.findAll());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        mv.addObject("tipo",authentication.getAuthorities().contains("ROLE_ADMIN"));
+        mv.addObject("tipo",authentication.getAuthorities().toString().contains("ROLE_ADMIN"));
         return mv;
     }
 
