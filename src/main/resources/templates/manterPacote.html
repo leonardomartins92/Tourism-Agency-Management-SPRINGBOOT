@@ -46,9 +46,8 @@
     <div class="row align-items-start">
         <h2><span th:text="${operacao}"/> Pacote</h2>
 
-
-            <form  action="#" th:action="@{manterPacote(operacao=${operacao})}" method="post" th:object="${pacote}">
-                <div class="row  g-3 justify-content-md-center">
+        <form th:action="@{manterPacote}" th:method="${metodo}" th:object="${pacote}">
+           <div class="row  g-3 justify-content-md-center">
 
                     <table class="table">
                         <thead>
@@ -137,7 +136,7 @@
         </div>
 
     </div>
-        </form>
+    </form>
 </div>
 
 <script type="text/javascript" th:src="@{/scripts/ViaCep.js}"></script>

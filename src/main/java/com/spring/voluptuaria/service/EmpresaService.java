@@ -1,40 +1,51 @@
 package com.spring.voluptuaria.service;
 
+import com.spring.voluptuaria.exception.NotFoundException;
 import com.spring.voluptuaria.model.Empresa;
 import com.spring.voluptuaria.repository.EmpresaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class EmpresaService {
 
-    @Autowired
-    EmpresaRepository empresaRepository;
+   private EmpresaRepository empresaRepository;
+   private TipoEmpresaService tipoEmpresaService;
+
+   @Autowired
+   public EmpresaService(EmpresaRepository empresaRepository, TipoEmpresaService tipoEmpresaService) {
+        this.empresaRepository = empresaRepository;
+        this.tipoEmpresaService = tipoEmpresaService;
+    }
 
     public List<Empresa> findAll() {
         return empresaRepository.findAll();
     }
-    public Empresa findById(Long id) {
-        return empresaRepository.findById(id).get();
+
+    public Empresa findById(Long id) throws NotFoundException {
+        return empresaRepository.findById(id).orElseThrow(()-> new NotFoundException(id));
     }
-    public Empresa save(Empresa empresa) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public Empresa save(Empresa empresa) throws NotFoundException {
+        empresa.setTipoEmpresa(tipoEmpresaService.findById(empresa.getIdTipoEmpresa()));
         return empresaRepository.save(empresa);
     }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(Empresa empresa){
         empresaRepository.delete(empresa);
     }
 
-    public List<Empresa> findAllByTipo(String tipo){
-        List<Empresa> empresas = new ArrayList<>();
+    public List<Empresa> findAllByTipo(Long tipo){
+       return findAll().stream().filter(empresa -> empresa.getIdTipoEmpresa() == tipo)
+               .collect(Collectors.toList());
 
-        for(Empresa empresa:findAll()){
-            if(empresa.getTipoEmpresa().getTipo().equals(tipo)){
-                empresas.add(empresa);
-            }
-        }
-        return empresas;
+
     }
 
 }

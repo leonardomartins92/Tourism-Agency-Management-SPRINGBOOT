@@ -51,9 +51,9 @@
       <h2> <span th:text="${operacao}"></span> Cliente</h2>
 
     <div class="col">
-        <form  action="#" th:action="@{manterCliente(operacao=${operacao})}" method="post" th:object="${cliente}">
+        <form th:action="@{manterCliente}" method="#"  th:method="${metodo}" th:object="${cliente}">
 
-            <div class="row g-3 justify-content-md-center">
+        <div class="row g-3 justify-content-md-center">
 
                 <div class="col-1">
                 <label for="id" class="form-label">Código</label>
@@ -112,6 +112,7 @@
             <div class="col-12">
                 <button type="submit" class="btn btn-primary" id="botaoSubmit">Confirmar</button>
             </div>
+
 
         </form>
 

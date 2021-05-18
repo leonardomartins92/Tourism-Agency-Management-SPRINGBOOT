@@ -1,38 +1,55 @@
 package com.spring.voluptuaria.service;
 
+import com.spring.voluptuaria.exception.NotFoundException;
 import com.spring.voluptuaria.model.Destino;
 import com.spring.voluptuaria.repository.DestinoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class DestinoService {
 
-    @Autowired
-    DestinoRepository destinoRepository;
+   private DestinoRepository destinoRepository;
+   private EmpresaService empresaService;
+   private PacoteService pacoteService;
+
+   @Autowired
+    public DestinoService(DestinoRepository destinoRepository, EmpresaService empresaService, PacoteService pacoteService) {
+        this.destinoRepository = destinoRepository;
+        this.empresaService = empresaService;
+        this.pacoteService = pacoteService;
+    }
 
     public List<Destino> findAll() {
         return destinoRepository.findAll();
     }
-    public Destino findById(Long id) {
-        return destinoRepository.findById(id).get();
+
+    public Destino findById(Long id) throws NotFoundException {
+        return destinoRepository.findById(id).orElseThrow(()-> new NotFoundException(id));
     }
-    public Destino save(Destino destino) {
+
+    @ResponseStatus(HttpStatus.CREATED)
+    public Destino save(Destino destino) throws NotFoundException {
+        destino.setEmpresa(empresaService.findById(destino.getIdEmpresa()));
+        destino.setPacote(pacoteService.findById(destino.getIdPacote()));
         return destinoRepository.save(destino);
     }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(Destino destino){
         destinoRepository.delete(destino);
     }
+
     public List<Destino> findAllWithId(Long cod){
-        List<Destino> destinos = new ArrayList<>();
-        for(Destino destino: findAll()){
-            if(destino.getIdPacote() == cod){
-                destinos.add(destino);
-            }
-        }
-        return destinos;
+        return findAll().stream()
+                .filter(destino -> destino.getId()==cod)
+                .collect(Collectors.toList());
+
     }
 
 }

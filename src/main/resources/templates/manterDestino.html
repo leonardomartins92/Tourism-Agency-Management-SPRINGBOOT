@@ -53,8 +53,8 @@
         <h2><span th:text="${operacao}"></span> Destino</h2>
         
         <div class="col">
-            <form  action="#" th:action="@{manterDestino(operacao=${operacao})}" method="post" th:object="${destino}">
-               <div class="row g-3 justify-content-md-center">
+            <form th:action="@{manterDestino}" th:method="${metodo}" th:object="${destino}">
+                <div class="row g-3 justify-content-md-center">
                 <div class="col-md-1">
                     <label for="id" class="form-label">Código</label>
                     <input type="text" class="form-control" id="id" name="id" placeholder=""  th:attr="value = ${destino?.id}" readonly>
@@ -98,6 +98,7 @@
                     <button type="submit" class="btn btn-primary" id="botaoSubmit">Confirmar</button>
                 </div>
         </form>
+
     </div>
     <script type="text/javascript" th:src="@{/scripts/ViaCep.js}"></script>
     <script type="text/javascript" th:src="@{/scripts/main.js}"></script>

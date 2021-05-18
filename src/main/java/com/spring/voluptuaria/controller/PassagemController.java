@@ -1,67 +1,70 @@
 package com.spring.voluptuaria.controller;
 
-import com.spring.voluptuaria.model.Empresa;
-import com.spring.voluptuaria.model.Passagem;
+import com.spring.voluptuaria.exception.NotFoundException;
 import com.spring.voluptuaria.model.Passagem;
 import com.spring.voluptuaria.service.EmpresaService;
 import com.spring.voluptuaria.service.PacoteService;
 import com.spring.voluptuaria.service.PassagemService;
+import com.spring.voluptuaria.utils.Method;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@Controller
+@RestController
 @Slf4j
 public class PassagemController {
-    @Autowired
-    PassagemService passagemService;
-    @Autowired
-    EmpresaService empresaService;
-    @Autowired
-    PacoteService pacoteService;
 
-    @GetMapping(value = "/pesquisaPassagem")
+    private PassagemService passagemService;
+    private EmpresaService empresaService;
+    private PacoteService pacoteService;
+    private Method method;
+
+    public PassagemController(PassagemService passagemService, EmpresaService empresaService, PacoteService pacoteService, Method method) {
+        this.passagemService = passagemService;
+        this.empresaService = empresaService;
+        this.pacoteService = pacoteService;
+        this.method = method;
+    }
+
+    @GetMapping(path = "/pesquisaPassagem")
     public ModelAndView preparaPesquisa(){
         ModelAndView mv = new ModelAndView("pesquisaPassagem");
         mv.addObject("passagens", passagemService.findAll());
         return mv;
     }
 
-    @GetMapping(value = "/manterPassagem")
+    @GetMapping(path = "/manterPassagem")
     public ModelAndView preparaManter(@RequestParam String operacao,
-                                @RequestParam(required = false) Long cod){
+                                      @RequestParam(required = false) Long cod) throws NotFoundException {
         ModelAndView mv;
-
         mv = new ModelAndView("manterPassagem");
-        mv.addObject("operacao", operacao);
         mv.addObject("pacotes", pacoteService.findAll());
-        mv.addObject("empresas", empresaService.findAllByTipo("AEREA"));
-
-        if (!operacao.equals("Adicionar")) {
+        mv.addObject("empresas", empresaService.findAllByTipo(2L));
+        mv.addObject("operacao", operacao);
+        mv.addObject("metodo", method.verificaMetodo(operacao));
+        if(cod != null){
             mv.addObject("passagem", passagemService.findById(cod));
         }
-
         return mv;
     }
 
-    @PostMapping(value = "/manterPassagem")
-    public ModelAndView formulario(@RequestParam String operacao, Passagem passagem) {
+    @DeleteMapping(path = "/manterPassagem")
+    public ModelAndView deletarPassagem(Passagem passagem) {
+         passagemService.delete(passagem);
+         return preparaPesquisa();
+    }
 
-        if(operacao.equals("Excluir")){
-            passagemService.delete(passagem);
-        }
-        else{
-            passagem.setEmpresa(empresaService.findById(passagem.getIdEmpresa()));
-            passagem.setPacote(pacoteService.findById(passagem.getIdPacote()));
+    @PostMapping(path = "/manterPassagem")
+    public ModelAndView salvarPassagem(Passagem passagem) throws NotFoundException {
             passagemService.save(passagem);
-        }
+            return preparaPesquisa();
+    }
 
-        return preparaPesquisa();
+    @PutMapping(path = "/manterPassagem")
+    public ModelAndView editarPassagem(Passagem passagem) throws NotFoundException {
+       return salvarPassagem(passagem);
+
     }
 
 }

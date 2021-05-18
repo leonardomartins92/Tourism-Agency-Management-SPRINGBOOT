@@ -1,5 +1,6 @@
 package com.spring.voluptuaria.controller;
 
+import com.spring.voluptuaria.exception.NotFoundException;
 import com.spring.voluptuaria.model.Funcionario;
 import com.spring.voluptuaria.model.Funcionario;
 import com.spring.voluptuaria.model.TipoEmpresa;
@@ -7,6 +8,7 @@ import com.spring.voluptuaria.model.TipoFuncionario;
 import com.spring.voluptuaria.service.FuncionarioService;
 import com.spring.voluptuaria.service.TipoEmpresaService;
 import com.spring.voluptuaria.service.TipoFuncionarioService;
+import com.spring.voluptuaria.utils.Method;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +21,24 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 @Slf4j
 public class FuncionarioController {
-    @Autowired
-    FuncionarioService funcionarioService;
-    @Autowired
-    TipoFuncionarioService tipoFuncionarioService;
-    @Autowired
-    TipoEmpresaService tipoEmpresaService;
 
-    @GetMapping(value = "/pesquisaFuncionario")
+    private FuncionarioService funcionarioService;
+    private TipoFuncionarioService tipoFuncionarioService;
+    private TipoEmpresaService tipoEmpresaService;
+    private Method method;
+
+    @Autowired
+    public FuncionarioController(FuncionarioService funcionarioService, TipoFuncionarioService tipoFuncionarioService, TipoEmpresaService tipoEmpresaService, Method method) {
+        this.funcionarioService = funcionarioService;
+        this.tipoFuncionarioService = tipoFuncionarioService;
+        this.tipoEmpresaService = tipoEmpresaService;
+        this.method = method;
+    }
+
+    @GetMapping(path = "/pesquisaFuncionario")
     public ModelAndView preparaPesquisa(){
         ModelAndView mv = new ModelAndView("pesquisaFuncionario");
         mv.addObject("funcionarios", funcionarioService.findAll());
@@ -38,78 +47,38 @@ public class FuncionarioController {
         return mv;
     }
 
-    @GetMapping(value = "/manterFuncionario")
-    public ModelAndView getView(@RequestParam String operacao,
-                                @RequestParam(required = false) Long cod){
+    @GetMapping(path = "/manterFuncionario")
+    public ModelAndView preparaManter(@RequestParam String operacao,
+                                      @RequestParam(required = false) Long cod) throws NotFoundException {
         ModelAndView mv;
-
-            mv = new ModelAndView("manterFuncionario");
-            mv.addObject("operacao", operacao);
-            mv.addObject("tipos", tipoFuncionarioService.findAll());
-
-            if (!operacao.equals("Adicionar")) {
-                mv.addObject("funcionario", funcionarioService.findById(cod));
-            }
-
+        mv = new ModelAndView("manterFuncionario");
+        mv.addObject("tipos", tipoFuncionarioService.findAll());
+        mv.addObject("operacao", operacao);
+        mv.addObject("metodo", method.verificaMetodo(operacao));
+        if(cod != null){
+            mv.addObject("funcionario", funcionarioService.findById(cod));
+        }
         return mv;
     }
-    @PostMapping(value = "/manterFuncionario")
-    public ModelAndView formulario(@RequestParam String operacao, Funcionario funcionario, String novaSenha) {
-        ModelAndView mv;
 
-        if(operacao.equals("Excluir")){
-            funcionarioService.delete(funcionario);
-        }
-
-        else{
-            if(funcionario.getIdTipoFuncionario()== 1) {
-                funcionario.setRoles("ROLE_ADMIN");
-            }
-            else{
-                funcionario.setRoles("ROLE_USER");
-            }
-           funcionario.setTipoFuncionario(tipoFuncionarioService.findById(funcionario.getIdTipoFuncionario()));
-
-            if(operacao.equals("Editar")){
-
-                if( funcionario.getSenha() == "" || funcionario.getSenha() == null) {
-                    funcionario.setSenha(funcionarioService.findById(funcionario.getId()).getSenha());
-                }
-                else{
-                    if(funcionario.getSenha().equals(funcionarioService.findById(funcionario.getId()).getSenha())) {
-                    funcionario.setSenha(novaSenha);
-                   }
-                    else{
-                        mv = getView(operacao, funcionario.getId());
-                        mv.addObject("erro",1);
-                        return mv;
-                    }
-                }
-            }
-            funcionarioService.save(funcionario);
-        }
+    @PostMapping(path = "/manterFuncionario")
+    public ModelAndView salvarFuncionario(Funcionario funcionario) throws NotFoundException {
+        funcionarioService.save(funcionario);
         return  preparaPesquisa();
     }
 
-    @GetMapping("/primeiroAcesso")
-    public ModelAndView configurar(){
-        ModelAndView mv = new ModelAndView("primeiroAcesso");
-
-        TipoFuncionario gerente = new TipoFuncionario(1L,"GERENTE");
-        TipoFuncionario vendedor = new TipoFuncionario(2L, "VENDEDOR");
-        TipoEmpresa aerea = new TipoEmpresa(1L, "AEREA");
-        TipoEmpresa acomodacao = new TipoEmpresa(2L, "ACOMODACAO");
-        Funcionario funcionario = new Funcionario(1L,"100","ADMIN", "99978", "adm@email",
-                "Rua da ADM", "1", "MG", "Juiz de Fora",
-                "36090000","123", gerente );
-        funcionario.setRoles("ROLE_ADMIN");
-        funcionario.setIdTipoFuncionario(1L);
-        tipoFuncionarioService.save(gerente);
-        tipoFuncionarioService.save(vendedor);
-        funcionarioService.save(funcionario);
-        tipoEmpresaService.save(acomodacao);
-        tipoEmpresaService.save(aerea);
-        return mv;
-
+    @DeleteMapping(path = "/manterFuncionario")
+    public ModelAndView deletarFuncionario(Funcionario funcionario) {
+        funcionarioService.delete(funcionario);
+        return  preparaPesquisa();
     }
+
+    @PutMapping(path = "/manterFuncionario")
+    public ModelAndView formulario(Funcionario funcionario, String novaSenha) throws Exception {
+        ModelAndView mv;
+        funcionarioService.updateFuncionario(funcionario, novaSenha);
+        return  preparaPesquisa();
+    }
+
+
 }

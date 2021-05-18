@@ -12,6 +12,7 @@ Criação de um Sistema Gerencial para Agências de Turismo:
 
 ### PRIMEIRAS CONFIGURAÇÕES
 
-Para o primeiro acesso é preciso acessar http://localhost:8080/primeiroAcesso e obter o login
+Para o primeiro acesso é preciso adicionar no banco de dados os Tipos de empresa e funcionário. 
+Além disso, é preciso cadastrar um funcionário com roles: "ROLE_ADMIN" para que tenha acesso à totalidade do sistema.
 
 

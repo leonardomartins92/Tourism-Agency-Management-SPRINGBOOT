@@ -73,8 +73,8 @@
                     <td class="id" th:attr="value = ${cliente.id}" th:text = "${cliente.id}" />
                     <td class="nome" th:attr="value = ${cliente.nome}" th:text = "${cliente.nome}" />
                     <td class="cpf" th:attr="value = ${cliente.cpf}" th:text = "${cliente.cpf}" />
-                    <td><a th:href="@{manterCliente(operacao='Editar', cod=${cliente.id})}" class="btn btn-primary btn-sm">Editar</a></td>
-                    <td><a th:href="@{manterCliente(operacao='Excluir', cod=${cliente.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
+                    <td><a th:href="@{manterCliente(operacao = 'Editar', cod = ${cliente.id})}" class="btn btn-primary btn-sm">Editar</a></td>
+                    <td><a th:href="@{manterCliente(operacao = 'Excluir', cod = ${cliente.id})}" class="btn btn-danger btn-sm">Excluir</a></td>
                 </tr>
 
             </tbody>
@@ -83,7 +83,7 @@
 
         <div class="col-md-2 ">
             <div class="list-group">
-                <a th:href="@{manterCliente(operacao='Adicionar')}" class="btn btn-success">Adicionar</a>
+                <a th:href="@{manterCliente(operacao = 'Adicionar')}" class="btn btn-success">Adicionar</a>
             </div>
         </div>
     </div>

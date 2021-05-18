@@ -50,8 +50,8 @@
     <h2><span th:text="${operacao}"></span> Funcionário</h2><br>
             
     <div class="col">
-        <form  action="#" th:action="@{manterFuncionario(operacao=${operacao})}" method="post" th:object="${funcionario}">
-            <div class="row g-3 justify-content-md-center">
+        <form th:action="@{manterFuncionario}" th:method="${metodo}" th:object="${funcionario}">
+               <div class="row g-3 justify-content-md-center">
                 <div class="row g-3 justify-content-md-center">
 
                     <div class="col-1">

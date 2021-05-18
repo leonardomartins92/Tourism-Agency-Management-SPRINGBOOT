@@ -1,50 +1,62 @@
 package com.spring.voluptuaria.controller;
 
+import com.spring.voluptuaria.exception.NotFoundException;
 import com.spring.voluptuaria.model.Cliente;
 import com.spring.voluptuaria.service.ClienteService;
-import lombok.extern.slf4j.Slf4j;
+import com.spring.voluptuaria.utils.Method;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-@Slf4j
-@Controller
+@RestController
 public class ClienteController {
-    @Autowired
-    ClienteService clienteService;
 
-    @GetMapping(value = "/pesquisaCliente")
+    private ClienteService clienteService;
+    private Method method;
+
+    @Autowired
+    public ClienteController(ClienteService clienteService, Method method) {
+        this.clienteService = clienteService;
+        this.method = method;
+    }
+
+    @GetMapping(path = "/pesquisaCliente")
     public ModelAndView preparaPesquisa(){
         ModelAndView mv = new ModelAndView("pesquisaCliente");
         mv.addObject("clientes", clienteService.findAll());
         return mv;
     }
 
-    @GetMapping(value = "/manterCliente")
+    @GetMapping(path = "/manterCliente")
     public ModelAndView preparaManter(@RequestParam String operacao,
-                        @RequestParam(required = false) Long cod){
-            ModelAndView mv;
-            mv = new ModelAndView("manterCliente");
-            mv.addObject("operacao", operacao);
-
-            if (!operacao.equals("Adicionar")) {
-                 mv.addObject("cliente", clienteService.findById(cod));
-            }
-             return mv;
+                                      @RequestParam(required = false) Long cod ) throws NotFoundException {
+        ModelAndView mv;
+        mv = new ModelAndView("manterCliente");
+        mv.addObject("operacao",operacao);
+        mv.addObject("metodo", method.verificaMetodo(operacao));
+        if(cod != null){
+            mv.addObject("cliente", clienteService.findById(cod));
+        }
+        return mv;
     }
 
-    @PostMapping(value = "/manterCliente")
-    public ModelAndView formulario(@RequestParam String operacao, Cliente cliente) {
-
-      if(operacao.equals("Excluir")){
-          clienteService.delete(cliente);
-      }
-      else{
-          clienteService.save(cliente);
-      }
+    @PostMapping(path = "/manterCliente")
+    public ModelAndView salvaCliente(Cliente cliente) {
+         clienteService.save(cliente);
          return preparaPesquisa();
     }
+
+    @DeleteMapping(path = "/manterCliente")
+    public ModelAndView deletaCliente(Cliente cliente) {
+          clienteService.delete(cliente);
+          return preparaPesquisa();
+    }
+    @PutMapping(path = "/manterCliente")
+    public ModelAndView atualizaCliente(Cliente cliente) {
+         return salvaCliente(cliente);
+    }
+
+
 
 
 }
