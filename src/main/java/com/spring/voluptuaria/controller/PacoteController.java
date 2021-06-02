@@ -4,34 +4,22 @@ import com.spring.voluptuaria.exception.NotFoundException;
 import com.spring.voluptuaria.model.Pacote;
 import com.spring.voluptuaria.service.*;
 import com.spring.voluptuaria.utils.Method;
-import lombok.extern.slf4j.Slf4j;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
-@Slf4j
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PacoteController {
 
-    private PacoteService pacoteService;
-    private FuncionarioService funcionarioService;
-    private ClienteService clienteService;
-    private DestinoService destinoService;
-    private EmpresaService empresaService;
-    private PassagemService passagemService;
-    private Method method;
-
-    @Autowired
-    public PacoteController(PacoteService pacoteService, FuncionarioService funcionarioService, ClienteService clienteService,
-                            DestinoService destinoService, EmpresaService empresaService, PassagemService passagemService, Method method) {
-        this.pacoteService = pacoteService;
-        this.funcionarioService = funcionarioService;
-        this.clienteService = clienteService;
-        this.destinoService = destinoService;
-        this.empresaService = empresaService;
-        this.passagemService = passagemService;
-        this.method = method;
-    }
+    private final PacoteService pacoteService;
+    private final FuncionarioService funcionarioService;
+    private final ClienteService clienteService;
+    private final DestinoService destinoService;
+    private final EmpresaService empresaService;
+    private final PassagemService passagemService;
+    private final Method method;
 
     @GetMapping(path = "/pesquisaPacote")
     public ModelAndView preparaPesquisa(){

@@ -2,41 +2,24 @@ package com.spring.voluptuaria.controller;
 
 import com.spring.voluptuaria.exception.NotFoundException;
 import com.spring.voluptuaria.model.Funcionario;
-import com.spring.voluptuaria.model.Funcionario;
-import com.spring.voluptuaria.model.TipoEmpresa;
-import com.spring.voluptuaria.model.TipoFuncionario;
 import com.spring.voluptuaria.service.FuncionarioService;
-import com.spring.voluptuaria.service.TipoEmpresaService;
 import com.spring.voluptuaria.service.TipoFuncionarioService;
 import com.spring.voluptuaria.utils.Method;
-import lombok.Builder;
-import lombok.extern.slf4j.Slf4j;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-import java.util.Optional;
-
 @RestController
-@Slf4j
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class FuncionarioController {
 
-    private FuncionarioService funcionarioService;
-    private TipoFuncionarioService tipoFuncionarioService;
-    private TipoEmpresaService tipoEmpresaService;
-    private Method method;
+    private final FuncionarioService funcionarioService;
+    private final TipoFuncionarioService tipoFuncionarioService;
+    private final Method method;
 
-    @Autowired
-    public FuncionarioController(FuncionarioService funcionarioService, TipoFuncionarioService tipoFuncionarioService, TipoEmpresaService tipoEmpresaService, Method method) {
-        this.funcionarioService = funcionarioService;
-        this.tipoFuncionarioService = tipoFuncionarioService;
-        this.tipoEmpresaService = tipoEmpresaService;
-        this.method = method;
-    }
 
     @GetMapping(path = "/pesquisaFuncionario")
     public ModelAndView preparaPesquisa(){
@@ -75,7 +58,6 @@ public class FuncionarioController {
 
     @PutMapping(path = "/manterFuncionario")
     public ModelAndView formulario(Funcionario funcionario, String novaSenha) throws Exception {
-        ModelAndView mv;
         funcionarioService.updateFuncionario(funcionario, novaSenha);
         return  preparaPesquisa();
     }

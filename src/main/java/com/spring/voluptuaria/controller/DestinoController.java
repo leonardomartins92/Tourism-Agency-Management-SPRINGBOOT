@@ -6,26 +6,19 @@ import com.spring.voluptuaria.service.DestinoService;
 import com.spring.voluptuaria.service.EmpresaService;
 import com.spring.voluptuaria.service.PacoteService;
 import com.spring.voluptuaria.utils.Method;
-import lombok.extern.slf4j.Slf4j;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 @RestController
-@Slf4j
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class DestinoController {
 
-    private DestinoService destinoService;
-    private PacoteService pacoteService;
-    private EmpresaService empresaService;
-    private Method method;
-
-    @Autowired
-    public DestinoController(DestinoService destinoService, PacoteService pacoteService, EmpresaService empresaService, Method method) {
-        this.destinoService = destinoService;
-        this.pacoteService = pacoteService;
-        this.empresaService = empresaService;
-        this.method = method;
-    }
+    private final DestinoService destinoService;
+    private final PacoteService pacoteService;
+    private final EmpresaService empresaService;
+    private final Method method;
 
     @GetMapping(path = "/pesquisaDestino")
     public ModelAndView preparaPesquisa(){

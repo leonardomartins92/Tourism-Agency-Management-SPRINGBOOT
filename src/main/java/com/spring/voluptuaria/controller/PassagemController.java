@@ -6,26 +6,19 @@ import com.spring.voluptuaria.service.EmpresaService;
 import com.spring.voluptuaria.service.PacoteService;
 import com.spring.voluptuaria.service.PassagemService;
 import com.spring.voluptuaria.utils.Method;
-import lombok.extern.slf4j.Slf4j;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
-@Slf4j
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PassagemController {
 
-    private PassagemService passagemService;
-    private EmpresaService empresaService;
-    private PacoteService pacoteService;
-    private Method method;
-
-    public PassagemController(PassagemService passagemService, EmpresaService empresaService, PacoteService pacoteService, Method method) {
-        this.passagemService = passagemService;
-        this.empresaService = empresaService;
-        this.pacoteService = pacoteService;
-        this.method = method;
-    }
+    private final PassagemService passagemService;
+    private final EmpresaService empresaService;
+    private final PacoteService pacoteService;
+    private final Method method;
 
     @GetMapping(path = "/pesquisaPassagem")
     public ModelAndView preparaPesquisa(){

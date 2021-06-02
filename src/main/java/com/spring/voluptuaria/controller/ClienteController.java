@@ -4,21 +4,18 @@ import com.spring.voluptuaria.exception.NotFoundException;
 import com.spring.voluptuaria.model.Cliente;
 import com.spring.voluptuaria.service.ClienteService;
 import com.spring.voluptuaria.utils.Method;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import javax.validation.Valid;
 
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 @RestController
 public class ClienteController {
 
-    private ClienteService clienteService;
-    private Method method;
-
-    @Autowired
-    public ClienteController(ClienteService clienteService, Method method) {
-        this.clienteService = clienteService;
-        this.method = method;
-    }
+    private final ClienteService clienteService;
+    private final Method method;
 
     @GetMapping(path = "/pesquisaCliente")
     public ModelAndView preparaPesquisa(){
@@ -41,7 +38,7 @@ public class ClienteController {
     }
 
     @PostMapping(path = "/manterCliente")
-    public ModelAndView salvaCliente(Cliente cliente) {
+    public ModelAndView salvaCliente(@Valid Cliente cliente) {
          clienteService.save(cliente);
          return preparaPesquisa();
     }

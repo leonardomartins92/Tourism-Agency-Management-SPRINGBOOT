@@ -2,6 +2,7 @@ package com.spring.voluptuaria.model;
 
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,8 @@ import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Cliente {
 
@@ -36,7 +39,7 @@ public class Cliente {
     @NotNull
     private String cep;
 
-    public Cliente(Long id, String cpf, String nome, String telefone, String email, String logradouro, String numero, String complemento, String uf, String localidade, String cep) {
+    public Cliente(Long id, String cpf, String nome, String telefone, String email, String logradouro, String numero, String uf, String localidade, String cep) {
         this.id = id;
         this.cpf = cpf;
         this.nome = nome;

@@ -3,6 +3,7 @@ package com.spring.voluptuaria.service;
 import com.spring.voluptuaria.exception.NotFoundException;
 import com.spring.voluptuaria.model.Funcionario;
 import com.spring.voluptuaria.repository.FuncionarioRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -11,17 +12,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 @Service
 public class FuncionarioService {
 
-   private FuncionarioRepository funcionarioRepository;
-   private TipoFuncionarioService tipoFuncionarioService;
-
-   @Autowired
-    public FuncionarioService(FuncionarioRepository funcionarioRepository, TipoFuncionarioService tipoFuncionarioService) {
-        this.funcionarioRepository = funcionarioRepository;
-        this.tipoFuncionarioService = tipoFuncionarioService;
-    }
+   private final FuncionarioRepository funcionarioRepository;
+   private final TipoFuncionarioService tipoFuncionarioService;
 
     public List<Funcionario> findAll() {
         return funcionarioRepository.findAll();
@@ -31,7 +27,7 @@ public class FuncionarioService {
            return funcionarioRepository.findById(id)
                 .orElseThrow(()-> new NotFoundException(id));
     }
-    @ResponseStatus(HttpStatus.CREATED)
+
     public Funcionario save(Funcionario funcionario) throws NotFoundException {
         funcionario.setTipoFuncionario(tipoFuncionarioService.findById(funcionario.getIdTipoFuncionario()));
 
@@ -44,7 +40,6 @@ public class FuncionarioService {
         return funcionarioRepository.save(funcionario);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(Funcionario funcionario){
         funcionarioRepository.delete(funcionario);
     }
