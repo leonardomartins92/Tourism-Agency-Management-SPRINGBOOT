@@ -1,4 +1,4 @@
-## Trabalho desenvolvido para estudos de SPRING BOOT:
+## Trabalho desenvolvido para estudos de SPRING BOOT MVC:
 
 
 Criação de um Sistema Gerencial para Agências de Turismo:
